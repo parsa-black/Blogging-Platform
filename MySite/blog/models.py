@@ -46,9 +46,20 @@ class ProfileUser(models.Model):
         verbose_name = 'User'
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
 class Post(models.Model):
     title = models.CharField(max_length=25)
     content = RichTextUploadingField()
     pub_date = models.DateTimeField(auto_now_add=True)
     root_post = models.ForeignKey('Post', on_delete=models.CASCADE, null=True, blank=True)
     author = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag)
+
+    def __str__(self):
+        return self.title
