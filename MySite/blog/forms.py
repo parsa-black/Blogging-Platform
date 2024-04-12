@@ -54,3 +54,27 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = models.User
         fields = ['first_name', 'last_name', 'username', 'password', 'email', 'confirm_password']
+
+
+class ProfileForm(forms.ModelForm):
+    birth_date = forms.DateField(
+        label='Birth Date',
+        widget=forms.DateInput(attrs={'placeholder': 'BirthDate', 'type': 'date'})
+    )
+    phone_number = forms.CharField(
+        label='Phone Number',
+        max_length=10,
+        min_length=10,
+        widget=forms.TextInput(attrs={'placeholder': 'Phone Number'}),
+        error_messages={'required': 'Please Enter Your Phone Number',
+                        'max_length': 'Phone Number must be 10 Characters',
+                        'min_length': 'Phone Number must be 10 Characters'}
+    )
+
+    image = forms.ImageField(
+        required=False
+    )
+
+    class Meta:
+        model = models.ProfileUser
+        fields = ['birth_date', 'phone_number', 'image']
