@@ -7,7 +7,7 @@ from django.contrib.auth.hashers import make_password
 # Create your views here.
 
 
-def Timeline(request):
+def TimeLine(request):
     posts = models.Post.objects.all
     return render(request, 'TimeLine.html', {'posts': posts})
 
@@ -42,7 +42,7 @@ def SignUp(request):
 
 def Login(request):
     if request.user.is_authenticated:
-        return redirect('home-page')
+        return redirect('timeline')
 
     form = forms.LoginForm(request.POST or None)
     msg = None
