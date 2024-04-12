@@ -1,5 +1,7 @@
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from ckeditor.fields import RichTextField
 # from django.core.validators import MaxValueValidator
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 
@@ -19,7 +21,7 @@ class ProfileUser(models.Model):
                                         MinLengthValidator(limit_value=10),
                                         MaxLengthValidator(limit_value=10),
                                     ])  # 0(912 345 6789)
-    image = models.ImageField(upload_to='blog/images', null=True, blank=True)
+    image = models.ImageField(upload_to='blog/media/images', null=True, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -46,7 +48,7 @@ class ProfileUser(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=25)
-    content = models.TextField()
+    content = RichTextUploadingField()
     pub_date = models.DateTimeField(auto_now_add=True)
     root_post = models.ForeignKey('Post', on_delete=models.CASCADE, null=True, blank=True)
     author = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)

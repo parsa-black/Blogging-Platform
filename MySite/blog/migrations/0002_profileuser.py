@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('birth_date', models.DateField(blank=True, null=True)),
                 ('phone_number', models.CharField(max_length=10, unique=True, validators=[django.core.validators.MinLengthValidator(limit_value=10), django.core.validators.MaxLengthValidator(limit_value=10)])),
-                ('image', models.ImageField(blank=True, null=True, upload_to='blog/images')),
+                ('image', models.ImageField(blank=True, null=True, upload_to='blog/media')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
