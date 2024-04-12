@@ -16,3 +16,23 @@ class ProfileUserAdmin(admin.ModelAdmin):
     @admin.display(ordering='post_count')
     def post_count(self, obj):
         return obj.post_count
+
+
+@admin.register(models.Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ['name', 'post_count']
+    search_fields = ['name']
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(post_count=Count('post'))
+
+    @admin.display(ordering='post_count')
+    def post_count(self, obj):
+        return obj.post_count
+
+
+@admin.register(models.Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ['title', 'author', 'pub_date']
+    search_fields = ['title', 'author']
+    list_per_page = 10
