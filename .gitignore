@@ -1,4 +1,4 @@
 DataBase/
 .idea/
 */__pycache__/*
-MySite/static/ckeditor
+MySite/static/ckeditor/
