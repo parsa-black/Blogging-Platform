@@ -1,10 +1,151 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/Login.css">
+    <title>Document</title>
 </head>
 <body>
-    <h1>Login</h1>
+    <div id="container" class="container">
+		<!-- FORM SECTION -->
+		<div class="row">
+			<!-- SIGN UP -->
+			<div class="col align-items-center flex-col sign-up">
+				<div class="form-wrapper align-items-center">
+					<div class="form sign-up">
+                        <form method= POST>
+                            {% csrf_token %}
+						<div class="input-group">
+							<i class='bx bxs-user'></i>
+							<label>username</label>
+                            {{ user_form }}
+						</div>
+                        <div class="input-group">
+							<i class='bx bxs-firstname'></i>
+							<input type="text" placeholder="First name">
+						</div>
+                        <div class="input-group">
+							<i class='bx bxs-lastname'></i>
+							<input type="text" placeholder="Last name">
+						</div>
+                        <div class="input-group">
+							<i class='bx bxs-phonenumber'></i>
+							<input type="text" placeholder="Phone number">
+						</div>
+						<div class="input-group">
+							<i class='bx bx-mail-send'></i>
+							<input type="email" placeholder="Email">
+						</div>
+						<div class="input-group">
+							<i class='bx bxs-lock-alt'></i>
+							<input type="password" placeholder="Password">
+						</div>
+						<div class="input-group">
+							<i class='bx bxs-lock-alt'></i>
+							<input type="password" placeholder="Confirm password">
+						</div>
+                        <div class="input-group">
+							<i class='bx bxs-birthday'></i>
+							<input type="date" placeholder="Birthday">
+						</div>
+                        <div class="input-group">
+							<i class='bx bxs-profile-pic'></i>
+							<input type="file" placeholder="Profile" accept="image/*">
+						</div>
+						<button type="submit">
+							Sign up
+						</button>
+                        </form>
+						<p>
+							<span>
+								Already have an account?
+							</span>
+							<b onclick="toggle()" class="pointer">
+								Sign in here
+							</b>
+						</p>
+					</div>
+				</div>
+			
+			</div>
+			<!-- END SIGN UP -->
+			<!-- SIGN IN -->
+			<div class="col align-items-center flex-col sign-in">
+				<div class="form-wrapper align-items-center">
+					<div class="form sign-in">
+                        <form method= POST>
+                            {% csrf_token %}
+						<div class="input-group">
+							<i class='bx bxs-user'></i>
+                            <label>Username</label>
+                            {{ form.username }}
+						</div>
+						<div class="input-group">
+							<i class='bx bxs-lock-alt'></i>
+                            <label>Password</label>
+                            {{ form.password }}
+						</div>
+						<button type="submit">
+							Sign in
+						</button>
+                        </form>
+						<p>
+							<b>
+								Forgot password?
+							</b>
+						</p>
+						<p>
+							<span>
+								Don't have an account?
+							</span>
+							<b onclick="toggle()" class="pointer">
+								Sign up here
+							</b>
+						</p>
+					</div>
+				</div>
+				<div class="form-wrapper">
+		
+				</div>
+			</div>
+			<!-- END SIGN IN -->
+		</div>
+		<!-- END FORM SECTION -->
+		<!-- CONTENT SECTION -->
+		<div class="row content-row">
+			<!-- SIGN IN CONTENT -->
+			<div class="col align-items-center flex-col">
+				<div class="text sign-in">
+					<h2>
+						Welcome
+					</h2>
+	
+				</div>
+				<div class="img sign-in">
+		
+				</div>
+			</div>
+			<!-- END SIGN IN CONTENT -->
+			<!-- SIGN UP CONTENT -->
+			<div class="col align-items-center flex-col">
+				<div class="img sign-up">
+				
+				</div>
+				<div class="text sign-up">
+					<h2>
+						Join with us
+					</h2>
+	
+				</div>
+			</div>
+			<!-- END SIGN UP CONTENT -->
+		</div>
+		<!-- END CONTENT SECTION -->
+	</div>
+    <script src="../../static/js/Login.js"></script>
 </body>
 </html>
