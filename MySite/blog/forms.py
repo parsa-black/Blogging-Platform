@@ -5,7 +5,7 @@ from . import models
 class UserForm(forms.ModelForm):
     first_name = forms.CharField(
         label='First Name',
-        max_length= 20,
+        max_length=20,
         widget=forms.TextInput(attrs={'placeholder': 'FirstName'}),
         error_messages={'required': 'Please Fill The Filed',
                         'max_length': 'Maximum Length is 20'}
