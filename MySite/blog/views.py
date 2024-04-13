@@ -41,8 +41,8 @@ def SignUp(request):
 
 
 def Login(request):
-    if request.user.is_authenticated:
-        return redirect('timeline')
+    # if request.user.is_authenticated:
+    #     return redirect('timeline')
 
     form = forms.LoginForm(request.POST or None)
     msg = None
