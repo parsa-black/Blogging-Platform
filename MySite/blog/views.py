@@ -13,10 +13,11 @@ def TimeLine(request):
 
 
 def SignUp(request):
-    msg = None
+    sign_msg = None
+    user_form = forms.UserForm(request.POST)
+    profile_form = forms.ProfileForm(request.POST, request.FILES)
+
     if request.method == 'POST':
-        user_form = forms.UserForm(request.POST)
-        profile_form = forms.ProfileForm(request.POST, request.FILES)
         if user_form.is_valid():
             if user_form.cleaned_data.get('password') == user_form.cleaned_data.get('confirm_password'):
                 user = user_form.save(commit=False)
@@ -27,38 +28,34 @@ def SignUp(request):
                 profile = profile_form.save(commit=False)
                 profile.user = user  # Associate the profile with the user
                 profile.save()
-                return redirect('login-page')
+                return redirect('timeline')
             else:
-                msg = 'Password should be equal to password confirm'
+                sign_msg = 'Password should be equal to password confirm'
     else:
         user_form = forms.UserForm()
         profile_form = forms.ProfileForm()
-    return render(request, 'SingUp.html', {
-        'user_form': user_form,
-        'profile_form': profile_form,
-        'msg': msg
+    return render(request, 'Login.html', {
+        'UserForm': user_form,
+        'ProfileForm': profile_form,
+        'sign_msg': sign_msg
     })
 
 
 def Login(request):
-    # if request.user.is_authenticated:
-    #     return redirect('timeline')
-
-    form = forms.LoginForm(request.POST or None)
-    msg = None
+    login_msg = None
+    loginform = forms.LoginForm(request.POST or None)
 
     if request.method == 'POST':
-
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
+        if loginform.is_valid():
+            username = loginform.cleaned_data.get('username')
+            password = loginform.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home-page')
+                return redirect('timeline')
             else:
-                msg = 'Invalid credentials'
+                login_msg = 'Invalid credentials'
         else:
-            msg = 'Error validating the form'
+            login_msg = 'Error validating the form'
 
-    return render(request, 'Login.html', {'form': form, 'msg': msg})
+    return render(request, 'Login.html', {'LoginForm': loginform, 'login_msg': login_msg})
