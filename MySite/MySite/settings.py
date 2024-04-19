@@ -70,6 +70,11 @@ TEMPLATES = [
     },
 ]
 
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
 WSGI_APPLICATION = 'MySite.wsgi.application'
 
 
@@ -136,12 +141,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-CKEDITOR_BASEPATH = "static/ckeditor/ckeditor"
-CKEDITOR_UPLOAD_PATH = "uploads/"
+STATIC_URL = '/static/'
+
+# # Example for using CKEditor 5:
+# CKEDITOR_BASEPATH = "https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"
+# CKEDITOR_UPLOAD_PATH = "uploads/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
