@@ -34,7 +34,7 @@ def SignUp(request):
     else:
         user_form = forms.UserForm()
         profile_form = forms.ProfileForm()
-    return render(request, 'Login.html', {
+    return render(request, 'SingUp.html', {
         'UserForm': user_form,
         'ProfileForm': profile_form,
         'sign_msg': sign_msg
