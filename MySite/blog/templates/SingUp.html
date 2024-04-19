@@ -1,10 +1,82 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" dir="ltr">
+  <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+    <title> Blogging | SignUp </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <style>
+      .error-msg {
+            color: red;
+            margin-top: 10px;
+        }
+  </style>
 <body>
-    <h1>SingUp</h1>
+    <h1>Welcome to your blog website</h1>
+    {% if user_form.errors %}
+        <div class="error-msg">
+            {% for field, errors in user_form.errors.items %}
+                {% for error in errors %}
+                    {{ error }}<br>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if sign_msg %}
+        <div class="error-msg">{{ sign_msg }}</div>
+    {% endif %}
+    <div class="bef-container">
+        <div class="container">
+            <div class="title">Registration</div>
+            <div class="content">
+              <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="user-details">
+                  <div class="input-box">
+                    <span class="details">First Name</span>
+                    {{ UserForm.first_name }}
+                  </div>
+                  <div class="input-box">
+                    <span class="details">Last Name</span>
+                    {{ UserForm.last_name }}
+                  </div>
+                  <div class="input-box">
+                    <span class="details">Username</span>
+                    {{ UserForm.username }}
+                  </div>
+                  <div class="input-box">
+                    <span class="details">Email</span>
+                    {{ UserForm.email }}
+                  </div>
+                  <div class="input-box">
+                    <span class="details">Phone Number</span>
+                    {{ ProfileForm.phone_number }}
+                  </div>
+                  <div class="input-box">
+                    <span class="details">Password</span>
+                    {{ UserForm.password }}
+                  </div>
+                  <div class="input-box">
+                    <span class="details">Confirm Password</span>
+                    {{ UserForm.confirm_password }}
+                  </div>
+                  <div class="input-box">
+                    <span class="details">Birthday</span>
+                    {{ ProfileForm.birth_date }}
+                  </div>
+                  <div class="Profile-box">
+                    <span class="details">Profile picture</span>
+                    {{ ProfileForm.image }}
+                  </div>
+                </div>
+                <div class="button">
+                  <input type="submit" value="Register">
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

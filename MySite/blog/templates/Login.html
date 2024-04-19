@@ -1,171 +1,48 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/login.css' %}">
-
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" dir="ltr">
+  <head>
     <meta charset="UTF-8">
+    <title> Blogging | Login </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/css/Login.css">
-    <title>Document</title>
-</head>
+  </head>
+  <style>
+      .error-msg {
+            color: red;
+            margin-top: 10px;
+        }
+  </style>
 <body>
-    <div id="container" class="container">
-		<!-- FORM SECTION -->
-		<div class="row">
-			<!-- SIGN UP -->
-            {% if UserForm.errors %}
-                <div class="error-msg">
-                    {% for field, errors in UserForm.errors.items %}
-                        {% for error in errors %}
-                            {{ error }}<br>
-                        {% endfor %}
-                    {% endfor %}
+    <h1>Welcome to your blog website</h1>
+    {% if login_msg %}
+        <div class="error-msg">{{ login_msg }}</div>
+    {% endif %}
+    <div class="bef-container">
+        <div class="container">
+            <div class="title">Login</div>
+            <div class="content">
+              <form method="POST">
+                {% csrf_token %}
+                <div class="user-details">
+                  <div class="input-box">
+                    <span class="details">Username</span>
+                    {{ LoginForm.username }}
+                  </div>
+                  <div class="input-box">
+                    <span class="details">Password</span>
+                    {{ LoginForm.password }}
+                  </div>
                 </div>
-            {% endif %}
-            {% if sign_msg %}
-                <div class="error-msg">{{ sign_msg }}</div>
-            {% endif %}
-			<div class="col align-items-center flex-col sign-up">
-				<div class="form-wrapper align-items-center">
-					<div class="form sign-up">
-                        <form method= POST enctype="multipart/form-data">
-                            {% csrf_token %}
-						<div class="input-group">
-							<i class='bx bxs-user'></i>
-							<label>Username</label>
-                            {{ UserForm.username }}
-						</div>
-                        <div class="input-group">
-							<i class='bx bxs-firstname'></i>
-							<label>FirstName</label>
-                            {{ UserForm.first_name }}
-						</div>
-                        <div class="input-group">
-							<i class='bx bxs-lastname'></i>
-							<label>LastName</label>
-                            {{ UserForm.last_name }}
-						</div>
-                        <div class="input-group">
-							<i class='bx bxs-phonenumber'></i>
-							<label>PhoneNumber</label>
-                            {{ ProfileForm.phone_number }}
-						</div>
-						<div class="input-group">
-							<i class='bx bx-mail-send'></i>
-							<label>Email</label>
-                            {{ UserForm.email }}
-						</div>
-						<div class="input-group">
-							<i class='bx bxs-lock-alt'></i>
-							<label>Password</label>
-                            {{ UserForm.password }}
-						</div>
-						<div class="input-group">
-							<i class='bx bxs-lock-alt'></i>
-							<label>ConfirmPassword</label>
-                            {{ UserForm.confirm_password }}
-						</div>
-                        <div class="input-group">
-							<i class='bx bxs-birthday'></i>
-							<label>BirthDate</label>
-                            {{ ProfileForm.birth_date }}
-						</div>
-                        <div class="input-group">
-							<i class='bx bxs-profile-pic'></i>
-							<label>ProfilePic</label>
-                            {{ ProfileForm.image }}
-						</div>
-						<button type="submit">
-							Sign up
-						</button>
-                        </form>
-						<p>
-							<span>
-								Already have an account?
-							</span>
-							<b onclick="toggle()" class="pointer">
-								Sign in here
-							</b>
-						</p>
-					</div>
-				</div>
-			
-			</div>
-			<!-- END SIGN UP -->
-			<!-- SIGN IN -->
-			<div class="col align-items-center flex-col sign-in">
-				<div class="form-wrapper align-items-center">
-					<div class="form sign-in">
-                        <form method= POST>
-                            {% csrf_token %}
-						<div class="input-group">
-							<i class='bx bxs-user'></i>
-                            <label>Username</label>
-                            {{ LoginForm.username }}
-						</div>
-						<div class="input-group">
-							<i class='bx bxs-lock-alt'></i>
-                            <label>Password</label>
-                            {{ LoginForm.password }}
-						</div>
-						<button type="submit">
-							Sign in
-						</button>
-                        </form>
-						<p>
-							<b>
-								Forgot password?
-							</b>
-						</p>
-						<p>
-							<span>
-								Don't have an account?
-							</span>
-							<b onclick="toggle()" class="pointer">
-								Sign up here
-							</b>
-						</p>
-					</div>
-				</div>
-				<div class="form-wrapper">
-
-				</div>
-			</div>
-			<!-- END SIGN IN -->
-		</div>
-		<!-- END FORM SECTION -->
-		<!-- CONTENT SECTION -->
-		<div class="row content-row">
-			<!-- SIGN IN CONTENT -->
-			<div class="col align-items-center flex-col">
-				<div class="text sign-in">
-					<h2>
-						Welcome
-					</h2>
-	
-				</div>
-				<div class="img sign-in">
-		
-				</div>
-			</div>
-			<!-- END SIGN IN CONTENT -->
-			<!-- SIGN UP CONTENT -->
-			<div class="col align-items-center flex-col">
-				<div class="img sign-up">
-				
-				</div>
-				<div class="text sign-up">
-					<h2>
-						Join with us
-					</h2>
-	
-				</div>
-			</div>
-			<!-- END SIGN UP CONTENT -->
-		</div>
-		<!-- END CONTENT SECTION -->
-	</div>
-    <script src="../../static/js/Login.js"></script>
+                <div class="button">
+                  <input type="submit">
+                </div>
+                <div>
+                  Not a member? <a href="{% url 'sing-up-page' %}">Signup now</a>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
