@@ -1,5 +1,6 @@
 from django import forms
 from . import models
+from .models import Tag
 
 
 class UserForm(forms.ModelForm):
@@ -99,3 +100,32 @@ class LoginForm(forms.Form):
     class Meta:
         model = models.User
         fields = ['username', 'password']
+
+
+class PostForm(forms.ModelForm):
+    title = forms.CharField(
+        label='Title',
+        max_length=25,
+        widget=forms.TextInput(attrs={"placeholder": "Title"}),
+        error_messages={'required': 'Please Enter Title',
+                        'max_length': 'Max Length must be 25 Characters'}
+    )
+    content = forms.CharField(
+        label='Content',
+        widget=forms.Textarea(attrs={"placeholder": "Content"}),
+        error_messages={'required': 'Please Enter Your Content'}
+    )
+    tags = forms.ModelMultipleChoiceField(
+        queryset=models.Tag.objects.all(),
+        widget=forms.CheckboxSelectMultiple(),
+        required=True,
+        help_text="Select Tags for your Post",
+        error_messages={'required': 'Please Select a Tag'}
+    )
+    image = forms.ImageField(
+        required=False
+    )
+
+    class Meta:
+        model = models.Post
+        fields = ['title', 'content', 'tags', 'image']

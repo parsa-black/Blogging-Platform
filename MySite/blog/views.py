@@ -3,8 +3,28 @@ from django.shortcuts import render, redirect
 from . import models, forms
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
+import sweetify
 
 # Create your views here.
+
+
+@login_required()
+def create_post(request):
+    if not request.user.is_staff:
+        if request.method == "POST":
+            post_form = forms.PostForm(request.POST, request.FILES)
+            if post_form.is_valid():
+                post_instance = post_form.save(commit=False)
+                post_form.instance.author = request.user.profileuser
+                post_form.save()
+                return redirect('timeline')
+        else:
+            post_form = forms.PostForm()
+
+        return render(request, 'post_form.html', {'post_form': post_form})
+    else:
+        sweetify.error(request, 'Access Denied')
+        return redirect('timeline')
 
 
 def TimeLine(request):
