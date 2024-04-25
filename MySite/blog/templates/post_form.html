@@ -1,0 +1,29 @@
+<h1>Create a New Post</h1>
+  <!-- Display the form -->
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-group">
+      {{ post_form.title.label_tag }}
+      {{ post_form.title }}
+    </div>
+
+    <div class="form-group">
+      {{ post_form.content.label_tag }}
+      {{ post_form.content }}
+    </div>
+
+    <div class="form-group">
+      {{ post_form.tags.label_tag }}
+      {{ post_form.tags }}
+    </div>
+
+    <div class="form-group">
+      <span class="details">Post Image</span>
+      {{ post_form.image }}
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Create Post</button>
+    </div>
+  </form>
