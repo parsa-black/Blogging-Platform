@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'ckeditor',
-    'tinymce',
     'sweetify',
 ]
 
@@ -120,7 +119,8 @@ CKEDITOR_CONFIGS = {
             {'name': 'alignment', 'items': ['JustifyLeft', 'JustifyCenter', 'JustifyRight']},
             {'name': 'insert', 'items': ['Table', 'HorizontalRule']},
         ],
-        'width': 'auto',
+        'width': '100%',
+        'height': '100%'
     },
 }
 
