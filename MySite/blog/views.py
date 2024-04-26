@@ -8,6 +8,11 @@ import sweetify
 # Create your views here.
 
 
+def post_single(request, post_id):
+    post = models.Post.objects.get(id=post_id)
+    return render(request, 'PostSingle.html', context={'post': post})
+
+
 @login_required()
 def create_post(request):
     if not request.user.is_staff:
