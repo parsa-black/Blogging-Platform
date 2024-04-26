@@ -1,4 +1,3 @@
-from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from ckeditor.fields import RichTextField
@@ -55,7 +54,7 @@ class Tag(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=25)
-    content = RichTextUploadingField()
+    content = RichTextField()
     pub_date = models.DateTimeField(auto_now_add=True)
     root_post = models.ForeignKey('Post', on_delete=models.CASCADE, null=True, blank=True)
     author = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)

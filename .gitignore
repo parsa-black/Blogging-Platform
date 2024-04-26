@@ -3,3 +3,4 @@ DataBase/
 */__pycache__/*
 MySite/static/ckeditor/
 .idea/Twitter.iml
+MySite/staticfiles/ckeditor/

@@ -1,3 +1,4 @@
+from ckeditor.widgets import CKEditorWidget
 from django import forms
 from . import models
 from .models import Tag
@@ -112,7 +113,7 @@ class PostForm(forms.ModelForm):
     )
     content = forms.CharField(
         label='Content',
-        widget=forms.Textarea(attrs={"placeholder": "Content"}),
+        widget=CKEditorWidget(config_name='basic'),
         error_messages={'required': 'Please Enter Your Content'}
     )
     tags = forms.ModelMultipleChoiceField(

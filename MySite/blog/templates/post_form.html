@@ -1,4 +1,15 @@
-<h1>Create a New Post</h1>
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a New Post</title>
+    <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>  <!-- CKEditor Core -->
+    <script src="{% static 'ckeditor/ckeditor-init.js' %}"></script>  <!-- CKEditor Initialization -->
+</head>
+<body>
+    <h1>Create a New Post</h1>
   <!-- Display the form -->
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -27,3 +38,4 @@
       <button type="submit" class="btn btn-primary">Create Post</button>
     </div>
   </form>
+</body>

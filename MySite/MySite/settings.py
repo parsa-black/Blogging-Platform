@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'ckeditor',
+    'tinymce',
     'sweetify',
 ]
 
@@ -70,11 +71,6 @@ TEMPLATES = [
         },
     },
 ]
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
 
 WSGI_APPLICATION = 'MySite.wsgi.application'
 
@@ -117,14 +113,15 @@ CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
 CKEDITOR_CONFIGS = {
-    'default':
-        {
-            'toolbar': 'full',
-            'width': 'auto',
-            'extraPlugins': ','.join([
-                'codesnippet',
-            ]),
-        },
+    'basic': {  # Basic configuration with text formatting
+        'toolbar': [
+            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline']},
+            {'name': 'paragraph', 'items': ['BulletedList', 'NumberedList']},
+            {'name': 'alignment', 'items': ['JustifyLeft', 'JustifyCenter', 'JustifyRight']},
+            {'name': 'insert', 'items': ['Table', 'HorizontalRule']},
+        ],
+        'width': 'auto',
+    },
 }
 
 # Internationalization
@@ -144,11 +141,14 @@ SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
-# # Example for using CKEditor 5:
-# CKEDITOR_BASEPATH = "https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"
-# CKEDITOR_UPLOAD_PATH = "uploads/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+
+CKEDITOR_BASEPATH = "/staticfiles/ckeditor/ckeditor"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
