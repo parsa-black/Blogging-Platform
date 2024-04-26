@@ -107,7 +107,13 @@ class PostForm(forms.ModelForm):
     title = forms.CharField(
         label='Title',
         max_length=25,
-        widget=forms.TextInput(attrs={"placeholder": "Title"}),
+        widget=forms.TextInput(
+            attrs={
+                'class': 'title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none shadow-inner focus:border-sky-500 focus:ring-sky-500 focus:ring-1 rounded-md w-full',
+                'spellcheck': 'false',
+                'placeholder': 'Title',
+                'type': 'text'
+            }),
         error_messages={'required': 'Please Enter Title',
                         'max_length': 'Max Length must be 25 Characters'}
     )
@@ -118,12 +124,21 @@ class PostForm(forms.ModelForm):
     )
     tags = forms.ModelMultipleChoiceField(
         queryset=models.Tag.objects.all(),
-        widget=forms.CheckboxSelectMultiple(),
+        widget=forms.CheckboxSelectMultiple(
+            attrs={
+                'class': 'ml-1 px-2'
+            }
+        ),
         required=True,
         help_text="Select Tags for your Post",
         error_messages={'required': 'Please Select a Tag'}
     )
     image = forms.ImageField(
+        widget=forms.FileInput(
+            attrs={
+                'class': 'block w-48 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+            }
+        ),
         required=False
     )
 

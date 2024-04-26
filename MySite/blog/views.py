@@ -21,7 +21,7 @@ def create_post(request):
         else:
             post_form = forms.PostForm()
 
-        return render(request, 'post_form.html', {'post_form': post_form})
+        return render(request, 'NewPost.html', {'post_form': post_form})
     else:
         sweetify.error(request, 'Access Denied')
         return redirect('timeline')
