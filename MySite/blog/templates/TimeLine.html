@@ -115,7 +115,8 @@
                 href="#Tags"
                 >Tags</a
               >
-              <form class="flex items-center max-w-sm mx-auto w-60">
+              <form action="{% url 'search-page' %}"
+                    class="flex items-center max-w-sm mx-auto w-60">
                 <label for="simple-search" class="sr-only">Search</label>
                 <div class="relative w-full mt-9">
                   <div
@@ -243,10 +244,9 @@
         <div data-aos="flip-up" class="max-w-xl mx-auto text-center mt-24">
           <h1 class="text-3xl">Posts</h1>
         </div>
-      <div class="grid md:grid-cols-3 gap-14 md:gap-5 mt-10">
-        {% for post in posts %}
+      {% for post in posts %}
         <!-- card -->
-        <div>
+        <div class="grid md:grid-cols-3 gap-14 md:gap-5 mt-10">
           <div
             data-aos="fade-up"
             class="bg-white shadow-xl p-6 text-center rounded-xl h-fit"
@@ -294,7 +294,6 @@
             {% endfor %}
             </ul>
           </div>
-        </div>
       </div>
       {% endfor %}
       </section>

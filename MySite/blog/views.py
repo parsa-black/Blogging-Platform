@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from . import models, forms
 from django.contrib.auth import authenticate, login, logout
@@ -11,6 +12,23 @@ import sweetify
 def post_single(request, post_id):
     post = models.Post.objects.get(id=post_id)
     return render(request, 'PostSingle.html', context={'post': post})
+
+def search(request):
+    query = request.GET.get('query')
+    txt = None
+    posts = None
+    if query:
+        posts = models.Post.objects.select_related('author').filter(Q(title__icontains=query) |
+                                                                    Q(content__icontains=query)
+                                                                    | Q(tags__name__icontains=query) |
+                                                                    Q(author__user__username__icontains=query))
+        context = {'posts': posts, 'query': query, 'txt': txt}
+        return render(request, 'TimeLine.html', context)
+    else:
+        txt = 'No posts found'
+
+    context = {'posts': posts, 'query': query, 'txt': txt}
+    return render(request, 'TimeLine.html', context)
 
 
 @login_required()
