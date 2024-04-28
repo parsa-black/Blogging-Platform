@@ -1,0 +1,78 @@
+/*primary color*/
+.bg-cream {
+    background-color: #FFF2E1;
+}
+
+/*font*/
+body {
+    font-family: 'Poppins', sans-serif;
+}
+/* nav div .li-class:hover{
+    color: skyblue;
+    transition: 0.25s ease-in-out;
+} */
+.bg-yellow-500 {
+    background-color: #F48C06;
+}
+.text-yellow-500 {
+    color: #F48C06;
+}
+    button-post:hover{
+        color: aqua;
+    
+}
+.tag-class:hover{
+    background-color: #2F327D;
+}
+nav div .button-post:hover{
+    background-color: #102c57a1;
+}
+#button-post:hover {
+    background-color: #0A1F3B !important; /* Change background color on hover */
+  }
+  
+  /* Show the "New post" text when hovering over the button */
+  #button-post:hover + .new-post {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out; /* Smooth transition effect */
+  }
+  .custom-bg-color:hover {
+    background-color: #102c57f6;
+  }
+  .custom-black:hover{
+    background-color: #000000f6;
+  }
+  .custom-bg-light:hover{
+    background-color: #102c579a;
+  }
+.username-header:hover{
+    color:#102c57f6;
+}
+.button-submit:hover{
+    background-color: #102c57a1;
+}
+.floating { 
+    animation-name: floating; 
+    animation-duration: 3s; 
+    animation-iteration-count: infinite; 
+    animation-timing-function: ease-in-out;
+} 
+@keyframes floating { 
+    0% { transform: translate(0, 0px); } 
+    50% { transform: translate(0, 8px); } 
+    100% { transform: translate(0, -0px); }  
+} 
+.floating-4 { 
+    animation-name: floating; 
+    animation-duration: 4s; 
+    animation-iteration-count: infinite; 
+    animation-timing-function: ease-in-out;
+} 
+@keyframes floating-4 { 
+    0% { transform: translate(0, 0px); } 
+    50% { transform: translate(0, 8px); } 
+    100% { transform: translate(0, -0px); }  
+}
+.text-darken {
+    color: #2F327D;
+}
