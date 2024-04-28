@@ -17,11 +17,11 @@
     />
     <link rel="stylesheet" href="../../static/css/style.css" />
   </head>
-  <body >
+  <body>
     <section>
       <!-- navbar -->
       <div style="height: fit-content; background-color: #EADBC8; position: fixed;" class="mb-6 top-0 z-10 w-full text-gray-700 ">
-        <div  
+        <div
           class=" top-0 flex  max-w-screen-xl px-8 mx-auto md:items-center md:justify-between md:flex-row"
         >
           <div  class="top-0 flex flex-row items-center justify-between py-6 w-full">
@@ -170,13 +170,13 @@
               </form>
 
               <a
-                
+
                 class=" px-10 py-3 mt-2 text-sm text-center bg-white text-gray-800 rounded-full md:mt-8 md:ml-4 hover:scale-110 hover:text-white custom-bg-color duration-300"
                 href="{% url 'login-page' %}"
                 >Login</a
               >
               <a
-                
+
                 class="px-10 py-3 flex justify-center w-20 mt-2 text-sm text-center bg-white text-gray-800 rounded-full md:mt-8 md:ml-4 hover:scale-110 hover:text-white custom-bg-color duration-300"
                 href="{% url 'sing-up-page' %}"
                 >Sign Up</a
@@ -243,16 +243,14 @@
         <div data-aos="flip-up" class="max-w-xl mx-auto text-center mt-24">
           <h1 class="text-3xl">Posts</h1>
         </div>
+      <div class="grid md:grid-cols-3 gap-14 md:gap-5 mt-10">
+    {% for post in posts %}
         <!-- card -->
-        {% for post in posts %}
-        <div class="grid md:grid-cols-3 gap-14 md:gap-5 mt-10">
+        <div>
           <div
             data-aos="fade-up"
             class="bg-white shadow-xl p-6 text-center rounded-xl h-fit"
           >
-            <div>
-              
-            </div>
             <div
             style="border-color: #102C57;"
               class="w-fit inline flex flex-row justify-center items-center rounded-xl hover:border-2 transition ease-in-out delay-150"
@@ -266,9 +264,9 @@
               </a>
               <div class="w-fit inline pr-1">
                 <a href="#" class="inline"> {{ post.author }} </a>
-                
+
               </div>
-              
+
             </div>
             <small class="inline text-right">Published on {{ post.pub_date }}</small>
             <div class="flex justify-start items-start">
@@ -297,14 +295,15 @@
             </ul>
           </div>
         </div>
+    {% endfor %}
       </section>
-        {% endfor %}
-      <section id="Tags">
+    </div>
+        <section id="Tags">
         <div class="mt-28 border-t-2 flex flex-row justify-start items-center flex-wrap">
             {% for tag in tags %}
             <a
               href="#"
-              
+
               class="shadow-md top-4 flex justify-center hover:-translate-y-1 hover:scale-110 mt-2 duration-300 custom-bg-color hover:text-white bg-gray-100 text-gray-800 text-2xs font-medium relative px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"
               >{{ tag.name }}</a>
             {% endfor %}
