@@ -34,7 +34,8 @@ def create_post(request):
 
 def TimeLine(request):
     posts = models.Post.objects.order_by('-pub_date').all
-    return render(request, 'TimeLine.html', {'posts': posts})
+    tags = models.Tag.objects.all()
+    return render(request, 'TimeLine.html', {'posts': posts, 'tags': tags})
 
 
 def SignUp(request):
