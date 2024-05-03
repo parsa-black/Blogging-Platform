@@ -9,9 +9,18 @@ import sweetify
 # Create your views here.
 
 
+def TimeLine(request):
+    posts = models.Post.objects.order_by('-pub_date').select_related('author').all
+    profile = models.ProfileUser.objects.get(user_id=request.user.id)
+    tags = models.Tag.objects.all()
+    return render(request, 'TimeLine.html', {'posts': posts, 'tags': tags, 'profile': profile})
+
+
 def post_single(request, post_id):
     post = models.Post.objects.get(id=post_id)
-    return render(request, 'PostSingle.html', context={'post': post})
+    profile = models.ProfileUser.objects.get(user_id=request.user.id)
+    return render(request, 'PostSingle.html', context={'post': post, 'profile': profile})
+
 
 def search(request):
     query = request.GET.get('query')
@@ -48,12 +57,6 @@ def create_post(request):
     else:
         sweetify.error(request, 'Access Denied')
         return redirect('timeline')
-
-
-def TimeLine(request):
-    posts = models.Post.objects.order_by('-pub_date').select_related('author').all
-    tags = models.Tag.objects.all()
-    return render(request, 'TimeLine.html', {'posts': posts, 'tags': tags})
 
 
 def SignUp(request):
