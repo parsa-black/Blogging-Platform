@@ -126,7 +126,7 @@ class PostForm(forms.ModelForm):
         queryset=models.Tag.objects.all(),
         widget=forms.CheckboxSelectMultiple(
             attrs={
-                'class': 'ml-1 px-2'
+                'class': 'ml-1 px-4'
             }
         ),
         required=True,
