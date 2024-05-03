@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.conf import settings
 from ckeditor.fields import RichTextField
 # from django.core.validators import MaxValueValidator
 from django.core.validators import MinLengthValidator, MaxLengthValidator
@@ -43,6 +44,30 @@ class ProfileUser(models.Model):
 
     class Meta:
         verbose_name = 'User'
+
+
+class Follow(models.Model):
+    follower = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='following'
+    )
+    followed = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='followers'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('follower', 'followed')  # Ensure a user can't follow someone twice
+        indexes = [
+            models.Index(fields=['follower']),
+            models.Index(fields=['followed']),
+        ]
+
+    def __str__(self):
+        return f'{self.follower.username} follows {self.followed.username}'
 
 
 class Tag(models.Model):

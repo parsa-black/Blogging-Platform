@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
+from django.db import transaction
 from . import models, forms
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
@@ -106,3 +108,30 @@ def Login(request):
             login_msg = 'Error validating the form'
 
     return render(request, 'Login.html', {'LoginForm': loginform, 'login_msg': login_msg})
+
+
+@login_required
+def follow_user(request, username):
+    user_to_follow = get_object_or_404(models.User, username=username)
+    follow, created = models.Follow.objects.get_or_create(follower=request.user, followed=user_to_follow)
+    if created:
+        return JsonResponse({'message': f'Now following {username}'})
+    else:
+        return JsonResponse({'message': f'Already following {username}'})
+
+
+@login_required
+@transaction.atomic
+def unfollow_user(request, username):
+    # Find the user to unfollow
+    user_to_unfollow = get_object_or_404(models.User, username=username)
+
+    # Get the follow object that represents the relationship
+    follow = models.Follow.objects.filter(follower=request.user, followed=user_to_unfollow)
+
+    if follow.exists():
+        follow.delete()  # Delete the relationship
+        return JsonResponse({'message': f'Successfully unfollowed {username}'})
+
+    # If there is no relationship, return an appropriate message
+    return JsonResponse({'message': f'You were not following {username}'})
