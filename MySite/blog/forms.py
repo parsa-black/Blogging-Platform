@@ -145,3 +145,36 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = models.Post
         fields = ['title', 'content', 'tags', 'image']
+
+
+class CommentForm(forms.ModelForm):
+    title = forms.CharField(
+        label='Title',
+        max_length=25,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none shadow-inner focus:border-sky-500 focus:ring-sky-500 focus:ring-1 rounded-md w-full',
+                'spellcheck': 'false',
+                'placeholder': 'Title',
+                'type': 'text'
+            }),
+        error_messages={'required': 'Please Enter Title',
+                        'max_length': 'Max Length must be 25 Characters'}
+    )
+    content = forms.CharField(
+        label='Content',
+        widget=CKEditorWidget(config_name='basic'),
+        error_messages={'required': 'Please Enter Your Content'}
+    )
+    image = forms.ImageField(
+        widget=forms.FileInput(
+            attrs={
+                'class': 'block w-48 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+            }
+        ),
+        required=False
+    )
+
+    class Meta:
+        model = models.Comment
+        fields = ['title', 'content', 'image']

@@ -4,3 +4,5 @@ DataBase/
 MySite/static/ckeditor/
 .idea/Twitter.iml
 MySite/staticfiles/ckeditor/
+MySite/blog/media/
+MySite/media/

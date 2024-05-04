@@ -19,7 +19,7 @@ def TimeLine(request):
 
 
 def post_single(request, post_id):
-    post = models.Post.objects.get(id=post_id)
+    post = get_object_or_404(models.Post, id=post_id)
     profile = models.ProfileUser.objects.get(user_id=request.user.id)
     return render(request, 'PostSingle.html', context={'post': post, 'profile': profile})
 
@@ -59,6 +59,26 @@ def create_post(request):
     else:
         sweetify.error(request, 'Access Denied')
         return redirect('timeline')
+
+
+@login_required
+def create_comment(request, post_id):
+    post = get_object_or_404(models.Post, id=post_id)  # Ensures post exists
+    if request.method == 'POST':
+        comment_form = forms.CommentForm(request.POST, request.FILES)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.author = request.user.profileuser
+            new_comment.root_post = post
+            new_comment.save()  # Save the comment
+            return redirect('post-single', post_id=post_id)  # Redirects to the post
+    else:
+        comment_form = forms.CommentForm()  # Initialize empty form
+
+    return render(request, 'NewComment.html', {
+        'comment_form': comment_form,
+        'post': post,
+    })
 
 
 def SignUp(request):

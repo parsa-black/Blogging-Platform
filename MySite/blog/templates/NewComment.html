@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>  <!-- CKEditor Core -->
+    <script src="{% static 'ckeditor/ckeditor-init.js' %}"></script>  <!-- CKEditor Initialization -->
+    <title>Document</title>
+    <style>
+      body {
+        background: white !important;
+      }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="heading text-center font-bold text-2xl m-5 mt-24 text-gray-800">
+      New <span class="text-cyan-700">Post</span>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div
+      class="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg max-w-2xl"
+    >
+        <div class="form-group">
+            {{ comment_form.title }}  <!-- This will output an input tag with custom attributes -->
+        </div>
+            {{ comment_form.content }}
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Post image</label>
+    <h3 class="mb-3"> Post image </h3>
+     {{ comment_form.image }}
+      <!-- buttons -->
+      <div class="buttons flex my-5">
+        <div
+          class=" hover:text-white btn border border-gray-300 p-1 px-4  font-semibold cursor-pointer text-gray-500 ml-auto hover:bg-red-400"
+        >
+          <p class="">Cancel</p>
+        </div>
+        <button type="submit" class="btn border border-indigo-500 p-1 px-4 text-black font-semibold cursor-pointer hover:bg-cyan-800 text-gray-300 hover:text-white ml-2 bg-indigo-500">
+        Post
+        </button>
+      </div>
+    </div>
+    </form>
+  </body>
+</html>
