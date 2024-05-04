@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>{{ author.get_username }}</h1>
+    {% for post in posts %}
+        <!-- card -->
+        <div class="flex flex-row justify-center item-center  mt-10">
+          <div
+            data-aos="fade-up"
+            class="bg-white shadow-xl p-6 text-center rounded-xl h-fit"
+          >
+            <div
+            style="border-color: #102C57;"
+              class="w-fit inline flex flex-row justify-center items-center rounded-xl hover:border-2 transition ease-in-out delay-150"
+            >
+              <a href="{% url 'profile-page' username=post.author %}" class="li-class px-2 py-2 w-fit h-fit">
+                <img
+                  class="w-10 h-10 rounded-full"
+                  src="../../media/{{ post.author.image }}"
+                  alt="Rounded avatar"
+                />
+              </a>
+              <div class="w-fit inline pr-1">
+                <a href="{% url 'profile-page' username=post.author.user.username %}" class="inline"> {{ post.author }} </a>
+              </div>
+            </div>
+            <small class="inline text-right">Published on {{ post.pub_date }}</small>
+            <div class="flex justify-start items-start">
+              <h1 class="font-medium text-xl pb-3 pt-0 lg:px-14 text-darken">
+                  {{ post.title }}
+              </h1>
+            </div>
+
+            <p class="px-4 text-gray-500">
+              <a href="{% url 'post-single' post_id=post.id %}">
+                  {{ post.content|safe }}
+              </a>
+            </p>
+            <ul
+              class="flex justify-start flex-wrap items-start mt-2 border-t-2 border-black"
+            >
+                {% for tag in post.tags.all %}
+              <li>
+                <a
+                        style="background-color: snow ;color: gray"
+                  href="#"
+                  class="tag-class flex justify-center hover:scale-110 mt-2 mx-4 duration-300  hover:text-white bg-white-100 text-gray-800 text-2xs font-medium relative px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"
+                  >{{ tag.name }}</a
+                >
+              </li>
+            {% endfor %}
+            <li> </li>
+
+            </ul>
+          </div>
+        </div>
+      {% endfor %}
+</body>
+</html>

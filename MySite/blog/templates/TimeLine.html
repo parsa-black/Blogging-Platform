@@ -264,7 +264,7 @@
             style="border-color: #102C57;"
               class="w-fit inline flex flex-row justify-center items-center rounded-xl hover:border-2 transition ease-in-out delay-150"
             >
-              <a href="#" class="li-class px-2 py-2 w-fit h-fit">
+              <a href="{% url 'profile-page' username=post.author %}" class="li-class px-2 py-2 w-fit h-fit">
                 <img
                   class="w-10 h-10 rounded-full"
                   src="../../media/{{ post.author.image }}"
@@ -272,7 +272,7 @@
                 />
               </a>
               <div class="w-fit inline pr-1">
-                <a href="#" class="inline"> {{ post.author }} </a>
+                <a href="{% url 'profile-page' username=post.author.user.username %}" class="inline"> {{ post.author }} </a>
               </div>
             </div>
             <small class="inline text-right">Published on {{ post.pub_date }}</small>

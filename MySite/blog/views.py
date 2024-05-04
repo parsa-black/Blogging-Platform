@@ -155,3 +155,16 @@ def unfollow_user(request, username):
 
     # If there is no relationship, return an appropriate message
     return JsonResponse({'message': f'You were not following {username}'})
+
+
+def profile_view(request, username):
+    # Fetch the related User instance by username
+    user_instance = get_object_or_404(models.User, username=username)
+
+    # Fetch the ProfileUser related to the User instance
+    profile_user = get_object_or_404(models.ProfileUser, user=user_instance)
+
+    # Fetch all posts authored by this ProfileUser
+    posts = models.Post.objects.filter(author=profile_user).order_by('-pub_date')
+
+    return render(request, 'ProfilePage.html', {'posts': posts, 'author': profile_user})
