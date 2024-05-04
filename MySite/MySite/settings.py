@@ -141,17 +141,17 @@ SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
+STATIC_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'  # URL to access media files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directory to store media files
 
 
-CKEDITOR_BASEPATH = "/staticfiles/ckeditor/ckeditor"
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
