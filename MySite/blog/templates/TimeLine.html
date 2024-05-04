@@ -279,7 +279,7 @@
                 <a href="{% url 'profile-page' username=post.author.user.username %}" class="inline"> {{ post.author }} </a>
               </div>
             </div>
-            <small class="inline text-right">Published on {{ post.pub_date }}</small>
+            <small class="inline text-right">{{ post.pub_date|timesince }} ago</small>
             <div class="flex justify-start items-start">
               <h1 class="font-medium text-xl pb-3 pt-0 lg:px-14 text-darken">
                   {{ post.title }}
