@@ -119,7 +119,7 @@
                 href="#Tags"
                 >Tags</a
               >
-              <form action="{% url 'search-page' %}"
+              <form method="GET" action="{% url 'search' %}"
                     class="flex items-center max-w-sm mx-auto w-60">
                 <label for="simple-search" class="sr-only">Search</label>
                 <div class="relative w-full mt-9">
@@ -144,9 +144,11 @@
                   </div>
                   <input
                     type="text"
+                    name="query"
                     id="simple-search"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Search ..."
+                    value="{{ query }}"
                     required
                   />
                 </div>
@@ -257,10 +259,10 @@
         </div>
       {% for post in posts %}
         <!-- card -->
-        <div class="flex flex-row justify-center item-center  mt-10">
+        <div class="flex flex-row justify-end mr-24 item-center mt-10">
           <div
             data-aos="fade-up"
-            class="bg-white shadow-xl p-6 text-center rounded-xl h-fit"
+            class="bg-white shadow-xl w-96 p-6 text-center rounded-xl h-fit"
           >
             <div
             style="border-color: #102C57;"
@@ -286,7 +288,7 @@
 
             <p class="px-4 text-gray-500">
               <a href="{% url 'post-single' post_id=post.id %}">
-                  {{ post.content|safe }}
+                  {{ post.content|safe|truncatechars:80 }}
               </a>
             </p>
             <ul
@@ -313,7 +315,7 @@
         <div class="mt-28 border-t-2 flex flex-row justify-start items-center flex-wrap">
             {% for tag in tags %}
             <a
-              href="#"
+              href="{% url 'search' %}?query={{ tag.name }}"
 
               class="shadow-md top-4 mx-4 px-4 flex justify-center hover:-translate-y-1 hover:scale-110 mt-2 duration-300 custom-bg-color hover:text-white bg-gray-100 text-gray-800 text-2xs font-medium relative px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"
               >{{ tag.name }}</a>

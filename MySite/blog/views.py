@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
 import sweetify
 
+
 # Create your views here.
 
 
@@ -28,21 +29,51 @@ def post_single(request, post_id):
 
 
 def search(request):
-    query = request.GET.get('query')
-    txt = None
-    posts = None
+    query = request.GET.get('query', '').strip()  # Get the search query
+    txt = None  # Default message
+    posts = None  # Default empty result set
+
     if query:
-        posts = models.Post.objects.select_related('author').filter(Q(title__icontains=query) |
-                                                                    Q(content__icontains=query)
-                                                                    | Q(tags__name__icontains=query) |
-                                                                    Q(author__user__username__icontains=query))
-        context = {'posts': posts, 'query': query, 'txt': txt}
-        return render(request, 'TimeLine.html', context)
+        # Check if the query matches any tag
+        tags = models.Tag.objects.filter(name__iexact=query)  # Case-insensitive search for tags
+        if tags.exists():
+            # If a tag is found, filter posts by that tag
+            tag = tags.first()  # Get the first matching tag
+            posts = models.Post.objects.filter(tags=tag).distinct()
+            txt = f"Posts with the tag: {query}"
+        else:
+            # Otherwise, perform a general search on title, content, or author username
+            posts = models.Post.objects.select_related('author').filter(
+                Q(title__icontains=query) |
+                Q(content__icontains=query) |
+                Q(author__user__username__icontains=query)
+            ).distinct()
+            txt = f"Results for: {query}"
+
+        # If no results found, set the message to indicate that
+        if not posts.exists():
+            txt = f"No posts found for '{query}'"
+
     else:
-        txt = 'No posts found'
+        txt = "Please enter a search query."  # No query provided
 
     context = {'posts': posts, 'query': query, 'txt': txt}
     return render(request, 'TimeLine.html', context)
+
+
+def tag_search(request, tag_name):
+    # Find the tag by its name
+    tag = get_object_or_404(models.Tag, name=tag_name)
+
+    # Retrieve posts that have this tag
+    posts = models.Post.objects.filter(tags__name=tag_name).select_related('author').distinct()
+
+    context = {
+        'tag': tag,
+        'posts': posts,
+    }
+
+    return render(request, 'tag_results.html', context)
 
 
 @login_required()
