@@ -173,13 +173,15 @@
                   <span class="sr-only">Search</span>
                 </button>
               </form>
-
+              {% if request.user.is_authenticated %}
               <a
-
                 class=" px-10 py-3 mt-2 text-sm text-center bg-white text-gray-800 rounded-full md:mt-8 md:ml-4 hover:scale-110 hover:text-white custom-bg-color duration-300"
-                href="{% url 'login-page' %}"
-                >Login</a
-              >
+                href="{% url 'logout-page' %}">Log Out</a>
+              {% else %}
+                  <a
+                class=" px-10 py-3 mt-2 text-sm text-center bg-white text-gray-800 rounded-full md:mt-8 md:ml-4 hover:scale-110 hover:text-white custom-bg-color duration-300"
+                href="{% url 'login-page' %}">Login</a>
+              {% endif %}
               <a
 
                 class="px-10 py-3 flex justify-center w-20 mt-2 text-sm text-center bg-white text-gray-800 rounded-full md:mt-8 md:ml-4 hover:scale-110 hover:text-white custom-bg-color duration-300"

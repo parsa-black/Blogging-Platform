@@ -13,7 +13,10 @@ import sweetify
 
 def TimeLine(request):
     posts = models.Post.objects.order_by('-pub_date').select_related('author').all
-    profile = models.ProfileUser.objects.get(user_id=request.user.id)
+    profile = None
+    if request.user.is_authenticated:
+        # Only get profile if the user is authenticated
+        profile = get_object_or_404(models.ProfileUser, user_id=request.user.id)
     tags = models.Tag.objects.all()
     return render(request, 'TimeLine.html', {'posts': posts, 'tags': tags, 'profile': profile})
 
@@ -128,6 +131,11 @@ def Login(request):
             login_msg = 'Error validating the form'
 
     return render(request, 'Login.html', {'LoginForm': loginform, 'login_msg': login_msg})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login-page')
 
 
 @login_required
