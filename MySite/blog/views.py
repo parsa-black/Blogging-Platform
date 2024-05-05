@@ -45,6 +45,10 @@ def post_single(request, post_id):
 
 def search(request):
     query = request.GET.get('query', '').strip()  # Get the search query
+    profile = None
+    if request.user.is_authenticated:
+        # Only get profile if the user is authenticated
+        profile = get_object_or_404(models.ProfileUser, user_id=request.user.id)
     txt = None  # Default message
     posts = None  # Default empty result set
 
@@ -72,7 +76,7 @@ def search(request):
     else:
         txt = "Please enter a search query."  # No query provided
 
-    context = {'posts': posts, 'query': query, 'txt': txt}
+    context = {'posts': posts, 'query': query, 'txt': txt, 'profile': profile}
     return render(request, 'TimeLine.html', context)
 
 
