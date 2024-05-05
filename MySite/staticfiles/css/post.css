@@ -19,7 +19,7 @@ body {
 }
     button-post:hover{
         color: aqua;
-
+    
 }
 .tag-class:hover{
     background-color: #2F327D;
@@ -30,7 +30,7 @@ nav div .button-post:hover{
 #button-post:hover {
     background-color: #0A1F3B !important; /* Change background color on hover */
   }
-
+  
   /* Show the "New post" text when hovering over the button */
   #button-post:hover + .new-post {
     opacity: 1;
@@ -51,27 +51,27 @@ nav div .button-post:hover{
 .button-submit:hover{
     background-color: #102c57a1;
 }
-.floating {
-    animation-name: floating;
-    animation-duration: 3s;
-    animation-iteration-count: infinite;
+.floating { 
+    animation-name: floating; 
+    animation-duration: 3s; 
+    animation-iteration-count: infinite; 
     animation-timing-function: ease-in-out;
-}
-@keyframes floating {
-    0% { transform: translate(0, 0px); }
-    50% { transform: translate(0, 8px); }
-    100% { transform: translate(0, -0px); }
-}
-.floating-4 {
-    animation-name: floating;
-    animation-duration: 4s;
-    animation-iteration-count: infinite;
+} 
+@keyframes floating { 
+    0% { transform: translate(0, 0px); } 
+    50% { transform: translate(0, 8px); } 
+    100% { transform: translate(0, -0px); }  
+} 
+.floating-4 { 
+    animation-name: floating; 
+    animation-duration: 4s; 
+    animation-iteration-count: infinite; 
     animation-timing-function: ease-in-out;
-}
-@keyframes floating-4 {
-    0% { transform: translate(0, 0px); }
-    50% { transform: translate(0, 8px); }
-    100% { transform: translate(0, -0px); }
+} 
+@keyframes floating-4 { 
+    0% { transform: translate(0, 0px); } 
+    50% { transform: translate(0, 8px); } 
+    100% { transform: translate(0, -0px); }  
 }
 .text-darken {
     color: #2F327D;

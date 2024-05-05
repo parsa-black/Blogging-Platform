@@ -141,11 +141,14 @@ SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+
+# Additional directories where static files are stored (for development)
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),  # Path to your static files in development
 )
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# Directory where static files are collected for production
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'  # URL to access media files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directory to store media files
