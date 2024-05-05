@@ -6,6 +6,7 @@ from django.db import transaction
 from . import models, forms
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
+from django.template.loader import render_to_string
 import sweetify
 
 
@@ -23,13 +24,23 @@ def TimeLine(request):
 
 
 def post_single(request, post_id):
+    # Get the post by ID or raise a 404 if not found
     post = get_object_or_404(models.Post, id=post_id)
-    profile = models.ProfileUser.objects.get(user_id=request.user.id)
-    return render(request, 'PostSingle.html',
-                  context={
-                      'post': post,
-                      'profile': profile,
-                  })
+
+    # Get the comments for this post using the `related_name`
+    comments = models.Comment.objects.filter(root_post=post).order_by('-pub_date')  # Comments in descending order of publication
+
+    # Fetch the current user's profile
+    profile = models.ProfileUser.objects.get(user_id=post.author.id)
+
+    # Return the context with comments
+    context = {
+        'post': post,
+        'comments': comments,  # Include the comments in the context
+        'profile': profile,
+    }
+
+    return render(request, 'PostSingle.html', context)
 
 
 def search(request):
@@ -101,22 +112,25 @@ def create_post(request):
 
 @login_required
 def create_comment(request, post_id):
-    post = get_object_or_404(models.Post, id=post_id)  # Ensures post exists
+    # Get the post by ID
+    post = get_object_or_404(models.Post, id=post_id)
+
     if request.method == 'POST':
-        comment_form = forms.CommentForm(request.POST, request.FILES)
+        comment_form = forms.CommentForm(request.POST)  # Instantiate form with POST data
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
-            new_comment.author = request.user.profileuser
-            new_comment.root_post = post
-            new_comment.save()  # Save the comment
-            return redirect('post-single', post_id=post_id)  # Redirects to the post
-    else:
-        comment_form = forms.CommentForm()  # Initialize empty form
+            new_comment.author = request.user.profileuser  # Set the comment author
+            new_comment.root_post = post  # Set the root post
+            new_comment.save()  # Save the new comment
 
-    return render(request, 'NewComment.html', {
-        'comment_form': comment_form,
-        'post': post,
-    })
+            # Render the new comment's HTML
+            new_comment_html = render_to_string('partials/comment.html', {'comment': new_comment})
+
+            # Return a JSON response with the new comment's HTML
+            return JsonResponse({'new_comment_html': new_comment_html}, status=200)
+
+    # If not a POST request or form not valid, return an error response
+    return JsonResponse({'error': 'Invalid request or form data'}, status=400)
 
 
 def SignUp(request):

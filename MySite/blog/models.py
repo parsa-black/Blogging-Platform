@@ -90,12 +90,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    title = models.CharField(max_length=25)
-    content = RichTextField()
+    content = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
     root_post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True, blank=True, related_name='post')
     author = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='blog/media/images', null=True, blank=True)
-
-    def __str__(self):
-        return self.title
