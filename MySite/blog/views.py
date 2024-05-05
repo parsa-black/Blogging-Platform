@@ -25,7 +25,11 @@ def TimeLine(request):
 def post_single(request, post_id):
     post = get_object_or_404(models.Post, id=post_id)
     profile = models.ProfileUser.objects.get(user_id=request.user.id)
-    return render(request, 'PostSingle.html', context={'post': post, 'profile': profile})
+    return render(request, 'PostSingle.html',
+                  context={
+                      'post': post,
+                      'profile': profile,
+                  })
 
 
 def search(request):
@@ -206,4 +210,12 @@ def profile_view(request, username):
     # Fetch all posts authored by this ProfileUser
     posts = models.Post.objects.filter(author=profile_user).order_by('-pub_date')
 
-    return render(request, 'ProfilePage.html', {'posts': posts, 'author': profile_user})
+    # Post Count
+    post_count = posts.count()
+
+    return render(request, 'ProfilePage.html',
+                  {
+                      'posts': posts,
+                      'author': profile_user,
+                      'post_count': post_count,
+                  })
