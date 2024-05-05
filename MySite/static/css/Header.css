@@ -1,0 +1,56 @@
+.bg-color-header{
+    background-color: #EADBC8 ;
+  }
+#button-post:hover{
+    background-color: rgb(16, 44, 87)
+}
+  #button-post {
+    position: fixed; /* Fixed positioning */
+    bottom: 60px; /* Adjust as needed */
+    right: 50px; /* Adjust as needed */
+    z-index: 999; /* Ensures the button stays on top of other content */
+    background-color: #102C57;
+}
+.new-post{
+    position: fixed; /* Fixed positioning */
+    bottom: 105px; /* Adjust as needed */
+    right: 50px; /* Adjust as needed */
+    z-index: 999; /* Ensures the button stays on top of other content */
+}
+#button-post:hover + .new-post {
+    opacity: 1;
+    transform: translateY(-10px);
+    transition:transform 0.3s ease-in-out; /* Smooth transition effect */
+  }
+  .custom-bg-color:hover {
+    background-color: #102c57f6;
+  }
+
+  @media (max-width: 767px) {
+    .ml-14 {
+        margin-left: 0; /* Remove margin for smaller screens */
+    }
+    .mt-2 {
+        margin-top: 0.5rem; /* Adjust margin-top as needed */
+    }
+    .block {
+        display: block; /* Ensure buttons stack vertically on smaller screens */
+    }
+    .px-3, .px-4, .px-10 {
+        padding-left: 1rem; /* Adjust padding as needed */
+        padding-right: 1rem; /* Adjust padding as needed */
+    }
+    .py-3, .py-7, .py-10 {
+        padding-top: 0.75rem; /* Adjust padding-top as needed */
+        padding-bottom: 0.75rem; /* Adjust padding-bottom as needed */
+    }
+    .mt-8 {
+        margin-top: 2rem; /* Adjust margin-top as needed */
+    }
+    .w-20 {
+        width: 5rem; /* Adjust width as needed */
+    }
+    .h-10 {
+        height: 2.5rem; /* Adjust height as needed */
+    }
+}
