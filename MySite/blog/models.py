@@ -88,6 +88,10 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_comment_count(self):
+        # Return the number of comments for this post
+        return Comment.objects.filter(root_post=self).count()
+
 
 class Comment(models.Model):
     content = models.TextField()

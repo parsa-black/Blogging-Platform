@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.db import transaction
@@ -15,12 +15,21 @@ import sweetify
 
 def TimeLine(request):
     posts = models.Post.objects.order_by('-pub_date').select_related('author').all
+    top_posts = (
+        models.Post.objects
+        .annotate(comment_count=Count('post'))  # 'post' is the related_name for comments in Post
+        .order_by('-comment_count')  # Sort by comment count in descending order
+        [:5]  # Limit to top 5
+    )
+    for post in top_posts:
+        print(f"Title: {post.title}, Comment Count: {post.comment_count}")
     profile = None
     if request.user.is_authenticated:
         # Only get profile if the user is authenticated
         profile = get_object_or_404(models.ProfileUser, user_id=request.user.id)
     tags = models.Tag.objects.all()
-    return render(request, 'TimeLine.html', {'posts': posts, 'tags': tags, 'profile': profile})
+    return render(request, 'TimeLine.html', {'posts': posts, 'tags': tags,
+                                             'profile': profile, 'top_posts': top_posts})
 
 
 def post_single(request, post_id):

@@ -17,7 +17,7 @@ body {
 .text-yellow-500 {
     color: #F48C06;
 }
-    button-post:hover{
+#button-post:hover{
         color: aqua;
     
 }

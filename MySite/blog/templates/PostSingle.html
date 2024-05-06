@@ -18,7 +18,7 @@
     <style>
       .custom-bg-color:hover {
     background-color: #102c57f6;
-  }
+    }
     </style>
     <title>Post</title>
 </head>
@@ -217,7 +217,7 @@
               </form>
                   {% if comments %}
                     {% for comment in comments %}
-                      <article class="p-6 text-base bg-white rounded-lg dark:bg-gray-900">
+                      <article class="mt-6 p-6 text-base bg-white rounded-lg dark:bg-gray-900">
                           <footer class="flex justify-between items-center mb-2">
                               <a href="{% url 'profile-page' username=comment.author %}">
                                   <div class="flex items-center">

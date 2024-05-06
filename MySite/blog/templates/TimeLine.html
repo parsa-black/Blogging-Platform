@@ -24,7 +24,7 @@
 
   </head>
   <body>
-  <button> <i class="flex justify-center items-center" style="
+  <button class="flex justify-center items-center"> <i  style="
   position: fixed;
 bottom: 50px;
 right: 50%;
@@ -170,71 +170,157 @@ border-radius: 50%;" id="button" class="bi bi-arrow-up "></i></button>
     </div>
       <!-- All-In-One Cloud Software. -->
       <section id="post">
-        <div data-aos="flip-up" class="max-w-xl mx-auto text-center mt-24">
-          <h1 class="text-3xl">Posts</h1>
-        </div>
-      {% for post in posts %}
-        <!-- card -->
-        <div class="flex flex-row justify-end mr-24 item-center mt-10">
-          <div
-            data-aos="fade-up"
-            class="bg-white shadow-xl w-96 p-6 text-center rounded-xl h-fit"
-          >
-            <div
-            style="border-color: #102C57;"
-              class="w-fit inline flex flex-row justify-center items-center rounded-xl hover:border-2 transition ease-in-out delay-150"
-            >
-              <a href="{% url 'profile-page' username=post.author %}" class="li-class px-2 py-2 w-fit h-fit">
-                <img
-                  class="w-10 h-10 rounded-full"
-                  src="../../media/{{ post.author.image }}"
-                  alt="Rounded avatar"
-                />
-              </a>
-              <div class="w-fit inline pr-1">
-                <a href="{% url 'profile-page' username=post.author.user.username %}" class="inline"> {{ post.author }} </a>
+
+      </section>
+      <section>
+        <div class="flex flex-row justify-center md:gap-5 mt-10 max-md:flex-col">
+          <div class="p-4 border-2  w-full max-w-96  h-fit md:none">
+            <div class="flex flex-col">
+              <div class="UsefullLink border-b-2 border-black">
+                <h4 class="text-2xl "> <i class="bi bi-link"></i> UsefullLink</h4>
+                <ul class="flex flex-col">
+                  <a class="text-blue-500 p-1" href="https://www.tasnimnews.com/"><li>Tasnim</li></a>
+                  <a class="text-blue-500 p-1" href="https://www.mehrnews.com/"><li>Mehrnews</li></a>
+                  <a class="text-blue-500 p-1" href="https://www.varzesh3.com/"><li>Varzesh3</li></a>
+                  <a class="text-blue-500 p-1" href="https://www.khabaronline.ir/"><li>khabaronline</li></a>
+                </ul>
+              </div>
+              <div class="mt-2">
+                <h4 class="text-xl "><i class="bi bi-chat"></i> Most comments</h4>
+                    <div class="flex justify-center flex-col items-center">
+                  {% for post in top_posts %}
+                        <div
+                            data-aos="fade-up"
+                            class="bg-white shadow-xl pl-4 w-fit mt-4 p-6 text-center rounded-xl h-fit"
+                          >
+                            <div
+                            style="border-color: #102C57;"
+                              class="w-fit inline flex flex-row justify-center items-center rounded-xl hover:border-2 transition ease-in-out delay-150"
+                            >
+                              <a href="{% url 'profile-page' username=post.author %}" class="li-class px-2 py-2 w-fit h-fit">
+                                <img
+                                  class="w-10 h-10 rounded-full"
+                                  src="../../media/{{ post.author.image }}"
+                                  alt="Rounded avatar"
+                                />
+                              </a>
+                              <div class="w-fit inline pr-1">
+                                <a href="{% url 'profile-page' username=post.author.user.username %}" class="inline"> {{ post.author }} </a>
+                              </div>
+                            </div>
+                            <small class="inline text-right">{{ post.pub_date|timesince }} ago</small>
+                            <div class="flex justify-start items-start">
+                              <h1 class="font-medium text-xl pb-3 pt-0 lg:px-14 text-darken">
+                                  {{ post.title }}
+                              </h1>
+                            </div>
+
+                            <p class="px-4 text-gray-500">
+                              <a href="{% url 'post-single' post_id=post.id %}">
+                                  {{ post.content|safe|truncatechars:150 }}
+                              </a>
+                            </p>
+                            <div class="items-start">
+                              <i class="bi bi-chat"></i>
+                                  {{ post.get_comment_count }}
+                              </div>
+                            <ul
+                              class="flex justify-start flex-wrap items-start mt-2 border-t-2 border-black"
+                            >
+                                {% for tag in post.tags.all %}
+                              <li>
+                                <a
+                                        style="background-color: snow ;color: gray"
+                                  href="{% url 'search' %}?query={{ tag.name }}"
+                                  class="tag-class flex justify-center hover:scale-110 mt-2 mx-4 duration-300  hover:text-white bg-white-100 text-gray-800 text-2xs font-medium relative px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"
+                                  >{{ tag.name }}</a
+                                >
+                              </li>
+                            {% endfor %}
+                            <li> </li>
+
+                            </ul>
+                          </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+             <div class="border-l-2 border-gray-100 max-md:border-t-2 max-md:mt-8">
+                  <h1 class="text-3xl flex justify-center ">Posts</h1>
+              <div
+                data-aos="fade-up"
+                class="w-full max-w-96 sm:w-46 bg-white shadow-xl p-6 text-center rounded-xl h-fit ml-12 max-md "
+              >
+
+            <!-- card -->
+            {% for post in posts %}
+            <div class="flex flex-row justify-center items-center mr-24 item-end mt-10">
+              <div
+                data-aos="fade-up"
+                class="bg-white shadow-xl pl-4 w-fit p-6 text-center rounded-xl h-fit"
+              >
+                <div
+                style="border-color: #102C57;"
+                  class="w-fit inline flex flex-row justify-center items-center rounded-xl hover:border-2 transition ease-in-out delay-150"
+                >
+                  <a href="{% url 'profile-page' username=post.author %}" class="li-class px-2 py-2 w-fit h-fit">
+                    <img
+                      class="w-10 h-10 rounded-full"
+                      src="../../media/{{ post.author.image }}"
+                      alt="Rounded avatar"
+                    />
+                  </a>
+                  <div class="w-fit inline pr-1">
+                    <a href="{% url 'profile-page' username=post.author.user.username %}" class="inline"> {{ post.author }} </a>
+                  </div>
+                </div>
+                <small class="inline text-right">{{ post.pub_date|timesince }} ago</small>
+                <div class="flex justify-start items-start">
+                  <h1 class="font-medium text-xl pb-3 pt-0 lg:px-14 text-darken">
+                      {{ post.title }}
+                  </h1>
+                </div>
+
+                <p class="px-4 text-gray-500">
+                  <a href="{% url 'post-single' post_id=post.id %}">
+                      {{ post.content|safe|truncatechars:150 }}
+                  </a>
+                </p>
+              <div class="items-start">
+              <i class="bi bi-chat"></i>
+                  {{ post.get_comment_count }}
+              </div>
+                <ul
+                  class="flex justify-start flex-wrap items-start mt-2 border-t-2 border-black"
+                >
+                    {% for tag in post.tags.all %}
+                  <li>
+                    <a
+                            style="background-color: snow ;color: gray"
+                      href="{% url 'search' %}?query={{ tag.name }}"
+                      class="tag-class flex justify-center hover:scale-110 mt-2 mx-4 duration-300  hover:text-white bg-white-100 text-gray-800 text-2xs font-medium relative px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"
+                      >{{ tag.name }}</a
+                    >
+                  </li>
+                {% endfor %}
+                <li> </li>
+
+                </ul>
               </div>
             </div>
-            <small class="inline text-right">{{ post.pub_date|timesince }} ago</small>
-            <div class="flex justify-start items-start">
-              <h1 class="font-medium text-xl pb-3 pt-0 lg:px-14 text-darken">
-                  {{ post.title }}
-              </h1>
-            </div>
-
-            <p class="px-4 text-gray-500">
-              <a href="{% url 'post-single' post_id=post.id %}">
-                  {{ post.content|safe|truncatechars:80 }}
-              </a>
-            </p>
-            <ul
-              class="flex justify-start flex-wrap items-start mt-2 border-t-2 border-black"
-            >
-                {% for tag in post.tags.all %}
-              <li>
-                <a
-                        style="background-color: snow ;color: gray"
-                  href="{% url 'search' %}?query={{ tag.name }}"
-                  class="tag-class flex justify-center hover:scale-110 mt-2 mx-4 duration-300  hover:text-white bg-white-100 text-gray-800 text-2xs font-medium relative px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"
-                  >{{ tag.name }}</a
-                >
-              </li>
             {% endfor %}
-            <li> </li>
+              </div>
+            </div>
+          </section>
+          <section id="Tags">
+            <div class="mt-28 border-t-2 flex flex-row justify-start items-center flex-wrap">
+                {% for tag in tags %}
+                <a
+                  href="{% url 'search' %}?query={{ tag.name }}"
 
-            </ul>
-          </div>
-        </div>
-      {% endfor %}
-      </section>
-        <section id="Tags">
-        <div class="mt-28 border-t-2 flex flex-row justify-start items-center flex-wrap">
-            {% for tag in tags %}
-            <a
-              href="{% url 'search' %}?query={{ tag.name }}"
-
-              class="shadow-md top-4 mx-4 px-4 flex justify-center hover:-translate-y-1 hover:scale-110 mt-2 duration-300 custom-bg-color hover:text-white bg-gray-100 text-gray-800 text-2xs font-medium relative px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"
-              >{{ tag.name }}</a>
+                  class="shadow-md top-4 mx-4 px-4 flex justify-center hover:-translate-y-1 hover:scale-110 mt-2 duration-300 custom-bg-color hover:text-white bg-gray-100 text-gray-800 text-2xs font-medium relative px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"
+                  >{{ tag.name }}</a>
             {% endfor %}
         </div>
       </section>
