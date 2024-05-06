@@ -2,6 +2,7 @@ DataBase/
 .idea/
 */__pycache__/*
 MySite/static/ckeditor/
+MySite/staticfiles/ckeditor/
 .idea/Twitter.iml
 MySite/blog/media/
 MySite/media/

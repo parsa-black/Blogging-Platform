@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- CDN TailwindCss -->
     <script src="https://cdn.tailwindcss.com"></script>
+      <link href="../../static/css/tailwind-all.css" rel="stylesheet">
+      <link href="../../static/css/style.css" rel="stylesheet">
 
     <!-- Alpine -->
 
@@ -22,6 +24,18 @@
 
   </head>
   <body>
+  <button> <i class="flex justify-center items-center" style="
+  position: fixed;
+bottom: 50px;
+right: 50%;
+width: 35px;
+height: 35px;
+display: none;
+background-color: #3C5B6F;
+color:snow ;
+border-radius: 50%;" id="button" class="bi bi-arrow-up "></i></button>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
       <div id="preloader">
             <div id="status">
               <img src="../../static/images/PreLoader.gif" alt="">
@@ -227,8 +241,24 @@
     <script>
         $(window).on('load',function(){
         $('#status').fadeOut();
-        $('#preloader').delay(500).fadeOut('slow');
+        $('#preloader').delay(200).fadeOut('slow');
     })
+    </script>
+    <script>
+        $(document).ready(function() {
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 50) {
+            $("#button").css("display", "block");
+        } else {
+            $("#button").css("display", "none");
+        }
+    });
+
+    $("#button").click(function() {
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+    });
+  });
+
     </script>
     <script>
       const btn = document.querySelector("button.mobile-menu-button");

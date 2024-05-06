@@ -9,8 +9,17 @@
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="../../static/css/tailwind-all.css" rel="stylesheet">
+    <link href="../../static/css/style.css" rel="stylesheet">
+
+     <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+    }
+  </style>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
 </head>
 <body class="h-screen flex items-center justify-center" style="background: #edf2f7;">
     <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
@@ -52,13 +61,13 @@
               </div>
             </div>
     </div>
-      {% for post in posts %}
     <section id="post">
       <div data-aos="flip-up" class="max-w-xl mx-auto text-center mt-2">
         <h1 class="text-3xl">Posts</h1>
       </div>
+      {% for post in posts %}
       <!-- card -->
-      <div class="flex justify-center md:gap-5 mt-10">
+      <div class="flex justify-center w-96 md:gap-5 mt-10">
         <div
           data-aos="fade-up"
           class="bg-white shadow-xl mx-16 p-6 text-center rounded-xl h-fit"
@@ -107,8 +116,8 @@
           </ul>
         </div>
       </div>
-    </section>
       {% endfor %}
+    </section>
     </div></div>
 </body>
 </html>
