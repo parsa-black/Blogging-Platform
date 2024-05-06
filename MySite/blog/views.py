@@ -14,7 +14,7 @@ import sweetify
 
 
 def TimeLine(request):
-    posts = models.Post.objects.order_by('-pub_date').select_related('author').alls
+    posts = models.Post.objects.order_by('-pub_date').select_related('author').all
     profile = None
     if request.user.is_authenticated:
         # Only get profile if the user is authenticated
