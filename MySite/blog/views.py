@@ -80,21 +80,6 @@ def search(request):
     return render(request, 'TimeLine.html', context)
 
 
-def tag_search(request, tag_name):
-    # Find the tag by its name
-    tag = get_object_or_404(models.Tag, name=tag_name)
-
-    # Retrieve posts that have this tag
-    posts = models.Post.objects.filter(tags__name=tag_name).select_related('author').distinct()
-
-    context = {
-        'tag': tag,
-        'posts': posts,
-    }
-
-    return render(request, 'tag_results.html', context)
-
-
 @login_required()
 def create_post(request):
     if not request.user.is_staff:
@@ -126,12 +111,7 @@ def create_comment(request, post_id):
             new_comment.author = request.user.profileuser  # Set the comment author
             new_comment.root_post = post  # Set the root post
             new_comment.save()  # Save the new comment
-
-            # Render the new comment's HTML
-            new_comment_html = render_to_string('partials/comment.html', {'comment': new_comment})
-
-            # Return a JSON response with the new comment's HTML
-            return JsonResponse({'new_comment_html': new_comment_html}, status=200)
+            return redirect('post-single', post_id=post_id)
 
     # If not a POST request or form not valid, return an error response
     return JsonResponse({'error': 'Invalid request or form data'}, status=400)

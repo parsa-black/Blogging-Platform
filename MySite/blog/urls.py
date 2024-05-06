@@ -8,7 +8,7 @@ urlpatterns = [
     path('create', views.create_post, name='create-post'),
     path('search/', views.search, name='search'),
     path('post/<int:post_id>', views.post_single, name='post-single'),
-    path('comment/<int:post_id>/', views.create_comment, name='create-comment'),
+    path('comment/<int:post_id>', views.create_comment, name='create-comment'),
     path('profile/<str:username>', views.profile_view, name='profile-page'),
     path('logout/', views.logout_view, name='logout-page'),
 ]
