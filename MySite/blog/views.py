@@ -14,7 +14,7 @@ import sweetify
 
 
 def TimeLine(request):
-    posts = models.Post.objects.order_by('-pub_date').select_related('author').all
+    posts = models.Post.objects.order_by('-pub_date').select_related('author').alls
     profile = None
     if request.user.is_authenticated:
         # Only get profile if the user is authenticated
@@ -27,8 +27,8 @@ def post_single(request, post_id):
     # Get the post by ID or raise a 404 if not found
     post = get_object_or_404(models.Post, id=post_id)
 
-    # Get the comments for this post using the `related_name`
-    comments = models.Comment.objects.filter(root_post=post).order_by('-pub_date')  # Comments in descending order of publication
+    # Comments in descending order of publication
+    comments = models.Comment.objects.filter(root_post=post).order_by('-pub_date')
 
     # Fetch the current user's profile
     profile = models.ProfileUser.objects.get(user_id=post.author.id)
