@@ -122,16 +122,16 @@ class PostForm(forms.ModelForm):
         widget=CKEditorWidget(config_name='basic'),
         error_messages={'required': 'Please Enter Your Content'}
     )
-    tags = forms.ModelMultipleChoiceField(
-        queryset=models.Tag.objects.all(),
-        widget=forms.CheckboxSelectMultiple(
+    tags = forms.CharField(
+        label="Tags (comma-separated)",
+        required=False,
+        help_text="Enter tags separated by commas.",
+        widget=forms.TextInput(
             attrs={
-                'class': 'ml-1 px-4 .custom-bg-color'
+                'class': 'title bg-gray-100 border border-gray-300',
+                'placeholder': 'Enter tags separated by commas.',
             }
-        ),
-        required=True,
-        help_text="Select Tags for your Post",
-        error_messages={'required': 'Please Select a Tag'}
+        )
     )
     image = forms.ImageField(
         widget=forms.FileInput(
@@ -145,6 +145,13 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = models.Post
         fields = ['title', 'content', 'tags', 'image']
+
+    def clean_tags(self):
+        tags_input = self.cleaned_data.get('tags')
+        if tags_input:
+            tag_names = [name.strip() for name in tags_input.split(',') if name.strip()]
+            return tag_names
+        return []
 
 
 class CommentForm(forms.ModelForm):

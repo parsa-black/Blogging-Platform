@@ -89,22 +89,36 @@ def search(request):
     return render(request, 'TimeLine.html', context)
 
 
-@login_required()
+@login_required
 def create_post(request):
     if not request.user.is_staff:
         if request.method == "POST":
             post_form = forms.PostForm(request.POST, request.FILES)
             if post_form.is_valid():
+                # Save the Post instance without committing (for further processing)
                 post_instance = post_form.save(commit=False)
-                post_form.instance.author = request.user.profileuser
-                post_form.save()
-                return redirect('timeline')
-        else:
-            post_form = forms.PostForm()
+                post_instance.author = request.user.profileuser  # Set the author
+                post_instance.save()  # Save the post instance
 
-        return render(request, 'NewPost.html', {'post_form': post_form})
+                # Handle the tags
+                tag_input = post_form.cleaned_data.get('tags')
+                if tag_input:
+                    for tag_name in tag_input:
+                        tag, created = models.Tag.objects.get_or_create(name=tag_name)
+                        post_instance.tags.add(tag)  # Corrected line
+
+                return redirect('timeline')  # Redirect to the desired page
+            else:
+                # If form is invalid, re-render the form with error messages
+                return render(request, 'NewPost.html', {'post_form': post_form})
+
+        else:
+            # If GET request, render an empty form
+            post_form = forms.PostForm()
+            return render(request, 'NewPost.html', {'post_form': post_form})
+
     else:
-        sweetify.error(request, 'Access Denied')
+        # Handle unauthorized access for non-staff users
         return redirect('timeline')
 
 
