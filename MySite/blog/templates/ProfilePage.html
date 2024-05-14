@@ -1,6 +1,5 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
-<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -26,7 +25,7 @@
 <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
 
   <section style="background-color:#EADBC8; width: 80%; height: 60%; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);" class="fixed top-0">
-    <div class="block stat-frame flex items-start">
+    <div class="stat-frame flex items-start">
 
       <a href="{% url 'timeline' %}"><img class="w-36" style="border-radius: 0px 0px 24px 0px;" src="../../static/images/LogoMain.png" alt=""></a>
     </div>
@@ -34,10 +33,10 @@
   <div style="position: fixed; display: flex; justify-content: center; overflow: auto; align-items: center; width: 65%; height: 100%; z-index: 10; margin-top: 270px; background-color: #ffffff;">
     <!-- Inner section -->
     <div style="overflow: auto; width: 100%; height: 100%; background-color: #FEFAF6; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">
-        <div class="flex flex-row justify-end items-center flex-wrap">
+        <div class="flex flex-row justify-around items-center flex-wrap">
 
           <div class="flex justify-center  items-center top-0 max-sm:mr-6 mr-48 md:flex md:justify-between sm:flex sm:justify-between">
-            <h2 class="mr-2">{{ post_count }} Posts</h2>
+            <h2 class="mr-8">{{ post_count }} Posts</h2>
             <img
                         class="max-sm:w-8 max-sm:h-8 max-md:w-12 max-md:h-12   p-1 rounded-full h-12 w-12 lg:h-16 lg:w-16"
                         src="../../media/{{ author.image }}"
@@ -45,9 +44,11 @@
                       />
                       <h3 class="ml-4 ">{{ author.get_username }}</h3>
           </div>
+          <div class="flex justify-end items-center">
             <div class="relative inline-block text-left">
               <div class="relative top-0 right-5 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
             {% if request.user.username == author.get_username %}
+
                 <div class="py-1" role="none">
                   <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
                   <a href="{% url 'create-post' %}" class="text-gray-700 block px-4 py-2 text-sm hover:text-black hover:bg-gray-300" role="menuitem" tabindex="-1" id="menu-item-0">New Post</a>
@@ -59,6 +60,7 @@
             <div></div>
             {% endif %}
               </div>
+              </div>
             </div>
     </div>
     <section id="post">
@@ -67,30 +69,33 @@
       </div>
       {% for post in posts %}
       <!-- card -->
-      <div class="flex justify-center w-96 md:gap-5 mt-10">
+      <div class="flex justify-center md:gap-5 mt-10">
         <div
           data-aos="fade-up"
-          class="bg-white shadow-xl mx-16 p-6 text-center rounded-xl h-fit"
+          class="bg-white shadow-xl w-6/12 p-6 text-center rounded-xl h-fit"
         >
           <div
           style="border-color: #102C57;"
-            class="w-fit inline flex flex-row justify-center items-center rounded-xl hover:border-2 transition ease-in-out delay-150"
+            class="flex flex-row justify-between items-center rounded-xl "
           >
+          <div class="flex justify-start items-center">
             <a href="{% url 'profile-page' username=post.author %}" class="li-class px-2 py-2 w-fit h-fit">
               <img
                 class="w-10 h-10 rounded-full"
                 src="../../media/{{ post.author.image }}"
-                alt="Rounded avatar"
+                alt="Author image"
               />
             </a>
-            <div class="w-fit inline pr-1">
-              <a href="#" class="inline"> {{ author.get_username }} </a>
+            {{ author.get_username }}
+          </div>
 
+            <div class="w-fit inline pr-1">
+              <p class="inline text-right">{{ post.pub_date|timesince }} Ago</p>
             </div>
 
           </div>
-          <p class="inline text-right">{{ post.pub_date|timesince }} Ago</p>
-          <div class="flex justify-start items-start">
+
+          <div class="flex justify-center items-start">
             <h1 class="font-medium text-xl pb-3 pt-0 lg:px-14 text-darken">
               {{ post.title }}
             </h1>
