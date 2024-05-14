@@ -74,3 +74,4 @@ class Comment(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
     root_post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True, blank=True, related_name='post')
     author = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
+    arent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')

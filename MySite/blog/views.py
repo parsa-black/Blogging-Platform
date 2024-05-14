@@ -123,7 +123,7 @@ def create_post(request):
 
 
 @login_required
-def create_comment(request, post_id):
+def create_comment(request, post_id, parent_comment_id=None):
     # Get the post by ID
     post = get_object_or_404(models.Post, id=post_id)
 
@@ -133,6 +133,9 @@ def create_comment(request, post_id):
             new_comment = comment_form.save(commit=False)
             new_comment.author = request.user.profileuser  # Set the comment author
             new_comment.root_post = post  # Set the root post
+            if parent_comment_id:
+                parent_comment = get_object_or_404(models.Comment, id=parent_comment_id)
+                new_comment.parent_comment = parent_comment
             new_comment.save()  # Save the new comment
             return redirect('post-single', post_id=post_id)
 
