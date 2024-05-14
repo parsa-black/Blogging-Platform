@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Count
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.db import transaction
 from . import models, forms
 from django.contrib.auth import authenticate, login, logout
@@ -37,7 +37,7 @@ def post_single(request, post_id):
     post = get_object_or_404(models.Post, id=post_id)
 
     # Comments in descending order of publication
-    comments = models.Comment.objects.filter(root_post=post).order_by('-pub_date')
+    comments = models.Comment.objects.filter(root_post=post).filter(arent_comment=None).order_by('-pub_date')
 
     # Fetch the current user's profile
     profile = models.ProfileUser.objects.get(user_id=post.author.id)
@@ -133,14 +133,36 @@ def create_comment(request, post_id, parent_comment_id=None):
             new_comment = comment_form.save(commit=False)
             new_comment.author = request.user.profileuser  # Set the comment author
             new_comment.root_post = post  # Set the root post
+
+            # Set the parent comment if provided
             if parent_comment_id:
                 parent_comment = get_object_or_404(models.Comment, id=parent_comment_id)
                 new_comment.parent_comment = parent_comment
+
             new_comment.save()  # Save the new comment
             return redirect('post-single', post_id=post_id)
 
     # If not a POST request or form not valid, return an error response
     return JsonResponse({'error': 'Invalid request or form data'}, status=400)
+
+
+@login_required
+def create_reply(request, post_id, parent_comment_id):
+    # Get the parent comment
+    parent_comment = get_object_or_404(models.Comment, id=parent_comment_id)
+    if request.method == 'POST':
+        form = forms.CommentForm(request.POST)
+        if form.is_valid():
+            reply = form.save(commit=False)
+            reply.author = request.user.profileuser
+            reply.root_post = get_object_or_404(models.Post, id=post_id)
+            reply.arent_comment = parent_comment  # Set the parent comment
+            reply.save()
+            return redirect('post-single', post_id=post_id)
+    else:
+        # Redirect unauthenticated users to the login page
+        return redirect('login-page')
+    return HttpResponseBadRequest("Invalid request")
 
 
 def SignUp(request):

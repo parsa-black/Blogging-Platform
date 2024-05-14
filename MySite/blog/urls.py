@@ -9,6 +9,7 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('post/<int:post_id>', views.post_single, name='post-single'),
     path('comment/<int:post_id>', views.create_comment, name='create-comment'),
+    path('comment/<int:post_id>/<int:parent_comment_id>', views.create_reply, name='create-reply'),
     path('profile/<str:username>', views.profile_view, name='profile-page'),
     path('logout/', views.logout_view, name='logout-page'),
 ]

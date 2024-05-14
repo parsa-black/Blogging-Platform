@@ -75,3 +75,6 @@ class Comment(models.Model):
     root_post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True, blank=True, related_name='post')
     author = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
     arent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
+
+    def __str__(self):
+        return self.content
