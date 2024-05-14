@@ -66,9 +66,9 @@
             </a>
             </div>
             
-            
-        <header class=' flex border-b bg-color-header rounded-xlg py-4 px-8  sm:px-10 font-[sans-serif] w-full tracking-wide absolute top-12 max-md:top-0 z-50'>
-          <div class='flex flex-wrap items-center justify-between gap-3 w-full'>
+            <div class="flex justify-center items-center">
+        <header class=' flex border-b bg-color-header rounded-xlg py-4 px-8  sm:px-10 font-[sans-serif] w-4/5 tracking-wide absolute top-12 max-md:top-0 z-50'>
+          <div class='flex flex-wrap items-center justify- gap-3 w-full'>
                 <!-- Logo href -->
                 <div class="block stat-frame">
                     <a href="{% url 'timeline' %}"><img src="../../static/images/Logo.ico" alt=""></a>
@@ -85,9 +85,17 @@
                   data-original="#000000"></path>
               </svg>
             </button>
-            <ul
-              class='lg:flex lg:ml-14 lg:gap-x-5 max-lg:space-y-3 max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50'>
-              <li class='flex flex-row max-lg:border-b max-lg:py-3 px-3'>
+              </div>
+
+              <button id="toggleOpen" class='lg:hidden ml-auto'>
+                <svg class="w-7 h-7" fill="#000" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                    clip-rule="evenodd"></path>
+                </svg>
+              </button>
+
+          <li class='flex flex-row max-lg:border-b max-lg:py-3 px-3'>
                       {% if request.user.is_authenticated %}
                       <a href="{% url 'profile-page' request.user.username %}" class=" inline ">
                           <img
@@ -106,11 +114,12 @@
                       <div></div>
                     {% endif %}
                     </li>
-                
-                  <li class='max-lg:border-b max-lg:py-3 px-3 mt-5'>
-                    <a href='{% url 'timeline' %}'
-                      class='lg:hover:text-[#007bff] text-[#007bff] block font-semibold text-[25px]'>Home</a>
-                  </li>
+              <div class='flex lg:ml-auto max-lg:w-full'>
+                  <ul
+              class='lg:flex lg:ml-14 lg:gap-x-5 max-lg:space-y-3 max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50'>
+
+
+
                   <div class="ml-12 max-lg:ml-2 mt-2 relative sm:flex sm:flex-wrap  ">
                     <form method="GET" action="{% url 'search' %}">
                       <div class='flex'>
@@ -119,13 +128,13 @@
                             <div></div>
                           {% else %}
                           <li class='SignUp  max-lg:py-3 px-3 mt-2 inline max-lg:block max-sm:mt-2 '><a
-        
+
                                 class=" max-lg:mt-4 px-4 py-7 text-sm text-center lg:bg-white text-gray-800 rounded-full sm:ml-0 hover:scale-110 hover:text-white custom-bg-color duration-300"
                                 href="{% url 'sing-up-page' %}"
                                 >Sign Up</a>
                           </li>
                           {% endif %}
-                              
+
                                 {% if request.user.is_authenticated %}
                                 <li class='Logout  max-lg:py-3 px-3 mt-2 inline max-lg:block max-sm:mt-2 '>
                                 <a
@@ -142,16 +151,6 @@
                               </li>
                           </div>
                 </ul>
-              </div>
-
-              <button id="toggleOpen" class='lg:hidden ml-auto'>
-                <svg class="w-7 h-7" fill="#000" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd"
-                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                    clip-rule="evenodd"></path>
-                </svg>
-              </button>
-              <div class='flex lg:ml-auto max-lg:w-full'>
                 <div
                   class='flex bg-gray-100 px-6 py-3 rounded outline outline-transparent focus-within:outline-[#007bff] focus-within:bg-transparent'>
                   <input type='text' placeholder='Search something...' name="query" value="{{ query }}"
@@ -169,6 +168,7 @@
               </form>
             </div>
         </header>
+            </div>
     </section>
       <section>
         <div class="flex flex-row justify-between mt-10 max-md:flex-col">
@@ -247,24 +247,22 @@
                 <h1 class="text-3xl flex justify-center">Posts you may like</h1>
               </div>
             
-             <div class=" max-md:border-t-2 max-md:mt-8">
-                  <h1 class="text-3xl flex justify-center ">Posts</h1>
-              <div
+                           <div
                 style="background-color: #EEEEEE;"
                 data-aos="fade-up"
-                class="w-full  sm:w-46 shadow-xl p-8 text-center rounded-xl h-fit  "
+                class="w-96  sm:w-46 shadow-xl p-8 text-center rounded-xl h-fit  "
               >
 
             <!-- card -->
             {% for post in posts %}
           <div class="flex flex-row justify-center">
             <div class="w-96 flex flex-row justify-center items-center mt-10">
-              <div 
-              
+              <div
+
                 data-aos="fade-up"
                 class="bg-white w-96 shadow-xl  p-8 text-center rounded-xl h-fit flex flex-row justify-start"
               >
-              
+
               <div>
                 <div
                 style="border-color: #102C57;"
@@ -277,14 +275,14 @@
                       alt="Rounded avatar"
                     />
                   </a>
-                 
+
                     <a class="p-2" href="{% url 'profile-page' username=post.author.user.username %}"> {{ post.author }} </a>
-                  
+
                 </div>
                 <div class="flex justify-end items-center">
                    <small class="inline text-right">{{ post.pub_date|timesince }} ago</small>
                 </div>
-                
+
                 <div class="flex justify-start items-start">
                   <h1 class="font-medium text-xl pb-3 pt-0 lg:px-14 text-darken">
                       {{ post.title }}
@@ -312,21 +310,26 @@
                     >
                   </li>
                 {% endfor %}
-                
-                
+
+
                 </ul>
-                
+
               </div>
-              <div class="ml-6 mt-8">
-                <img class="w-48 h-48 " src="../../static/images/testpic.jpg" alt="">
-              </div>
+              {% if post.image %}
+                <div class="ml-6 mt-8">
+                    <img class="w-48" src="../../media/{{ post.image }}" alt="">
+                </div>
+              {% else %}
+                <div></div>
+              {% endif %}
             </div>
             </div>
+
           </div>
             {% endfor %}
               </div>
+
             </div>
-          </div>
           </section>
     <script src="../../static/js/Header.js">
     </script>
