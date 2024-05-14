@@ -9,8 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- CDN TailwindCss -->
     <script src="https://cdn.tailwindcss.com"></script>
-      <link href="../../static/css/tailwind-all.css" rel="stylesheet">
       <link href="../../static/css/style.css" rel="stylesheet">
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <!-- Alpine -->
 
@@ -24,16 +24,17 @@
 
   </head>
   <body>
-  <button class="flex justify-center items-center"> <i  style="
+  <button > <i  style="
   position: fixed;
-bottom: 50px;
-right: 50%;
-width: 35px;
-height: 35px;
-display: none;
-background-color: #3C5B6F;
-color:snow ;
-border-radius: 50%;" id="button" class="bi bi-arrow-up "></i></button>
+  bottom: 50px;
+  right: 50%;
+  width: 50px;
+  height: 50px;
+  display: none;
+  background-color: #3C5B6F;
+  color:snow ;
+  border-radius: 50%;
+  margin-top:50%" id="button" class="bi bi-arrow-up "></i></button>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
       <div id="preloader">
@@ -50,88 +51,96 @@ border-radius: 50%;" id="button" class="bi bi-arrow-up "></i></button>
                   +
               </button>
             </a>
-            <strong class="new-post opacity-0 pl-4 text-sm">New post</strong>
+            <p class="new-post opacity-0 pl-4 text-sm">New post</p>
             </div>
-        <header class='flex border-b bg-color-header py-4 px-4 sm:px-10 font-[sans-serif] min-h-[70px] tracking-wide relative z-50'>
-            <div class='flex flex-wrap items-center gap-3 w-full'>
+            <div style="position: relative;">
+              <img style="max-md:None" class="md:none" src="../../static/images/HeaderImage.jpg" alt="">
+              </div>
+              <div class="max-lg:hidden">
+              <div id="leftText" class="text left">Welcome to Blog page</div>
+              <div id="rightText" class="text right">Start writing! The simplest experiences can be read</div>
+              <a href="{% url 'create-post' %}">
+              <button class="button-post bg-[#007bff]  hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+               New Post
+              </button>
+            </a>
+            </div>
+            
+            
+        <header class=' flex border-b bg-color-header rounded-xlg py-4 px-8  sm:px-10 font-[sans-serif] w-full tracking-wide absolute top-12 max-md:top-0 z-50'>
+          <div class='flex flex-wrap items-center justify-between gap-3 w-full'>
                 <!-- Logo href -->
                 <div class="block stat-frame">
                     <a href="{% url 'timeline' %}"><img src="../../static/images/Logo.ico" alt=""></a>
-
-                </div>
-              <div id="collapseMenu"
-                class='max-lg:hidden lg:!block max-lg:w-full max-lg:fixed max-lg:before:fixed max-lg:before:bg-black max-lg:before:opacity-50 max-lg:before:inset-0 max-lg:before:z-50'>
-                <button id="toggleClose" class='lg:hidden fixed top-2 right-4 z-[100] rounded-full bg-white p-3'>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-black" viewBox="0 0 320.591 320.591">
-                    <path
-                      d="M30.391 318.583a30.37 30.37 0 0 1-21.56-7.288c-11.774-11.844-11.774-30.973 0-42.817L266.643 10.665c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875L51.647 311.295a30.366 30.366 0 0 1-21.256 7.288z"
-                      data-original="#000000"></path>
-                    <path
-                      d="M287.9 318.583a30.37 30.37 0 0 1-21.257-8.806L8.83 51.963C-2.078 39.225-.595 20.055 12.143 9.146c11.369-9.736 28.136-9.736 39.504 0l259.331 257.813c12.243 11.462 12.876 30.679 1.414 42.922-.456.487-.927.958-1.414 1.414a30.368 30.368 0 0 1-23.078 7.288z"
-                      data-original="#000000"></path>
-                  </svg>
-                </button>
-
-                <ul
-                  class='lg:flex lg:ml-14 lg:gap-x-5 max-lg:space-y-3 max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50'>
-                  <li class='mb-6 hidden max-lg:block'>
-                    <a href="javascript:void(0)"><img src="https://readymadeui.com/readymadeui.svg" alt="logo" class='w-36' />
+                  </div>
+                  <div id="collapseMenu"
+            class='max-lg:hidden lg:!block max-lg:w-full max-lg:fixed max-lg:before:fixed max-lg:before:bg-black max-lg:before:opacity-50 max-lg:before:inset-0 max-lg:before:z-50'>
+            <button id="toggleClose" class='lg:hidden fixed top-2 right-4 z-[100] rounded-full bg-white p-3'>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-black" viewBox="0 0 320.591 320.591">
+                <path
+                  d="M30.391 318.583a30.37 30.37 0 0 1-21.56-7.288c-11.774-11.844-11.774-30.973 0-42.817L266.643 10.665c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875L51.647 311.295a30.366 30.366 0 0 1-21.256 7.288z"
+                  data-original="#000000"></path>
+                <path
+                  d="M287.9 318.583a30.37 30.37 0 0 1-21.257-8.806L8.83 51.963C-2.078 39.225-.595 20.055 12.143 9.146c11.369-9.736 28.136-9.736 39.504 0l259.331 257.813c12.243 11.462 12.876 30.679 1.414 42.922-.456.487-.927.958-1.414 1.414a30.368 30.368 0 0 1-23.078 7.288z"
+                  data-original="#000000"></path>
+              </svg>
+            </button>
+            <ul
+              class='lg:flex lg:ml-14 lg:gap-x-5 max-lg:space-y-3 max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50'>
+              <li class='flex flex-row max-lg:border-b max-lg:py-3 px-3'>
+                      {% if request.user.is_authenticated %}
+                      <a href="{% url 'profile-page' request.user.username %}" class=" inline ">
+                          <img
+                            class="w-12 h-10 rounded-full"
+                            src="../../media/{{ profile.image }}"
+                            alt="Bordered avatar"
+                          />
+                        </a>
+                        <a
+                      href="{% url 'profile-page' request.user.username %}"
+                      class="mt-4 ml-2 hover:underline"
+                    >
+                      {{ request.user.username }}
                     </a>
-                  </li>
-                  <!-- add profile pic -->
-                  <li class='flex flex-row max-lg:border-b max-lg:py-3 px-3'>
-                    {% if request.user.is_authenticated %}
-                    <a href="{% url 'profile-page' request.user.username %}" class=" inline ">
-                        <img
-                          class="w-12 h-10 rounded-full"
-                          src="../../media/{{ profile.image }}"
-                          alt="Bordered avatar"
-                        />
-                      </a>
-                      <a
-                    href="{% url 'profile-page' request.user.username %}"
-                    class="mt-4 ml-2 hover:underline"
-                  >
-                    {{ request.user.username }}
-                  </a>
-                  {% else %}
-                    <div></div>
-                  {% endif %}
-                  </li>
-
+                    {% else %}
+                      <div></div>
+                    {% endif %}
+                    </li>
+                
                   <li class='max-lg:border-b max-lg:py-3 px-3 mt-5'>
                     <a href='{% url 'timeline' %}'
-                      class='lg:hover:text-[#007bff] text-[#007bff] block font-semibold text-[15px]'>Home</a>
-                  </li>
-
-                  <li class='max-lg:border-b max-lg:py-3 px-3 mt-5'><a href='#Tags'
-                      class='lg:hover:text-[#007bff] text-gray-500 block font-semibold text-[15px]'>Tags</a>
+                      class='lg:hover:text-[#007bff] text-[#007bff] block font-semibold text-[25px]'>Home</a>
                   </li>
                   <div class="ml-12 max-lg:ml-2 mt-2 relative sm:flex sm:flex-wrap  ">
-                  {% if request.user.is_authenticated %}
-                    <div></div>
-                  {% else %}
-                  <li class='SignUp mb-6  max-lg:py-3 px-3 mt-2 inline max-lg:block max-sm:mt-2 '><a
-
-                        class="max-lg:bg-gray-100 max-lg:mt-4 px-4 py-7 text-sm text-center bg-white text-gray-800 rounded-full sm:ml-0 hover:scale-110 hover:text-white custom-bg-color duration-300"
-                        href="{% url 'sing-up-page' %}"
-                        >Sign Up</a>
-                  </li>
-                  {% endif %}
-                      <li class=' Login  max-lg:py-3 px-3 mt-2 inline max-lg:block'>
-                        {% if request.user.is_authenticated %}
-                        <a
-                        class="max-lg:bg-gray-100 max-lg:mt-4 px-10 py-3 mt-2    w-20 h-10  text-sm text-center rounded-full md:mt-8  hover:scale-110 hover:text-white custom-bg-color duration-300"
-                        href="{% url 'logout-page' %}"
-                        >Logout</a>
-                        {% else %}
-                         <a
-                            class=" px-10 py-3 mt-2 text-sm text-center bg-white text-gray-800 rounded-full md:mt-8 md:ml-4 hover:scale-110 hover:text-white custom-bg-color duration-300"
-                            href="{% url 'login-page' %}">Login</a>
-                        {% endif %}
-                      </li>
-                  </div>
-
+                    <form method="GET" action="{% url 'search' %}">
+                      <div class='flex'>
+                        <div class=" max-lg:ml-2 mt-2 relative sm:flex sm:flex-wrap  ">
+                          {% if request.user.is_authenticated %}
+                            <div></div>
+                          {% else %}
+                          <li class='SignUp  max-lg:py-3 px-3 mt-2 inline max-lg:block max-sm:mt-2 '><a
+        
+                                class=" max-lg:mt-4 px-4 py-7 text-sm text-center lg:bg-white text-gray-800 rounded-full sm:ml-0 hover:scale-110 hover:text-white custom-bg-color duration-300"
+                                href="{% url 'sing-up-page' %}"
+                                >Sign Up</a>
+                          </li>
+                          {% endif %}
+                              
+                                {% if request.user.is_authenticated %}
+                                <li class='Logout  max-lg:py-3 px-3 mt-2 inline max-lg:block max-sm:mt-2 '>
+                                <a
+                                class="  max-lg:mt-4 px-4 py-7 text-sm text-center lg:bg-white text-gray-800 rounded-full sm:ml-0 hover:scale-110 hover:text-white hover:bg-red-600 duration-300"
+                                href="{% url 'logout-page' %}"
+                                >Logout</a>
+                              </li>
+                                {% else %}
+                                <li class=' Login  max-lg:py-3 px-3 mt-2 inline max-lg:block max-md:none'>
+                                 <a
+                                    class=" px-10 py-3 mt-2 text-sm text-center lg:bg-white text-gray-800 rounded-full md:mt-8 md:ml-4 hover:scale-120 hover:text-white custom-bg-color duration-300"
+                                    href="{% url 'login-page' %}">Login</a>
+                                {% endif %}
+                              </li>
+                          </div>
                 </ul>
               </div>
 
@@ -142,12 +151,11 @@ border-radius: 50%;" id="button" class="bi bi-arrow-up "></i></button>
                     clip-rule="evenodd"></path>
                 </svg>
               </button>
-              <form method="GET" action="{% url 'search' %}">
               <div class='flex lg:ml-auto max-lg:w-full'>
                 <div
-                  class='flex xl:w-80 max-xl:w-full bg-gray-100 px-6 py-3 rounded outline outline-transparent focus-within:outline-[#007bff] focus-within:bg-transparent'>
+                  class='flex bg-gray-100 px-6 py-3 rounded outline outline-transparent focus-within:outline-[#007bff] focus-within:bg-transparent'>
                   <input type='text' placeholder='Search something...' name="query" value="{{ query }}"
-                    class='w-full text-sm bg-transparent rounded outline-none pr-2' />
+                    class=' text-sm bg-transparent rounded outline-none pr-2' />
                   <button type="submit">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904" width="16px"
                         class="cursor-pointer fill-gray-400">
@@ -162,27 +170,17 @@ border-radius: 50%;" id="button" class="bi bi-arrow-up "></i></button>
             </div>
         </header>
     </section>
-    <!-- part 2 -->
-    <!-- container -->
-    <div
-      class="container px-4 lg:px-8 mx-auto max-w-screen-xl text-gray-700 overflow-x-hidden"
-    >
-    </div>
-      <!-- All-In-One Cloud Software. -->
-      <section id="post">
-
-      </section>
       <section>
-        <div class="flex flex-row justify-around md:gap-5 mt-10 max-md:flex-col">
-          <div class="p-4 border-2  w-full max-w-96  h-fit md:none">
-            <div class="flex flex-col">
+        <div class="flex flex-row justify-between mt-10 max-md:flex-col">
+          <div style="background-color: #EEEEEE;" class="p-4 border-2  w-96 max-w-96  h-fit md:none rounded-xl shadow-xl">
+            <div   class="flex flex-col">
               <div class="UsefullLink border-b-2 border-black">
                 <h4 class="text-2xl "> <i class="bi bi-link"></i> UsefullLink</h4>
                 <ul class="flex flex-col">
-                  <a class="text-blue-500 p-1" href="https://www.tasnimnews.com/"><li>Tasnim</li></a>
-                  <a class="text-blue-500 p-1" href="https://www.mehrnews.com/"><li>Mehrnews</li></a>
-                  <a class="text-blue-500 p-1" href="https://www.varzesh3.com/"><li>Varzesh3</li></a>
-                  <a class="text-blue-500 p-1" href="https://www.khabaronline.ir/"><li>khabaronline</li></a>
+                  <a class="text-blue-500 p-1 w-fit" href="https://www.tasnimnews.com/"><li>Tasnim</li></a>
+                  <a class="text-blue-500 p-1 w-fit" href="https://www.mehrnews.com/"><li>Mehrnews</li></a>
+                  <a class="text-blue-500 p-1 w-fit" href="https://www.varzesh3.com/"><li>Varzesh3</li></a>
+                  <a class="text-blue-500 p-1 w-fit" href="https://www.khabaronline.ir/"><li>khabaronline</li></a>
                 </ul>
               </div>
               <div class="mt-2">
@@ -191,11 +189,11 @@ border-radius: 50%;" id="button" class="bi bi-arrow-up "></i></button>
                   {% for post in top_posts %}
                         <div
                             data-aos="fade-up"
-                            class="bg-white shadow-xl pl-4 w-fit mt-4 p-6 text-center rounded-xl h-fit"
+                            class="bg-white shadow-xl pl-4 w-80 mt-4 p-6 text-center rounded-xl h-fit"
                           >
                             <div
                             style="border-color: #102C57;"
-                              class="w-fit inline flex flex-row justify-center items-center rounded-xl hover:border-2 transition ease-in-out delay-150"
+                              class="w-fit flex flex-row justify-center items-center rounded-xl hover:border-2 transition ease-in-out delay-150"
                             >
                               <a href="{% url 'profile-page' username=post.author %}" class="li-class px-2 py-2 w-fit h-fit">
                                 <img
@@ -230,9 +228,8 @@ border-radius: 50%;" id="button" class="bi bi-arrow-up "></i></button>
                                 {% for tag in post.tags.all %}
                               <li>
                                 <a
-                                        style="background-color: snow ;color: gray"
                                   href="{% url 'search' %}?query={{ tag.name }}"
-                                  class="tag-class flex justify-center hover:scale-110 mt-2 mx-4 duration-300  hover:text-white bg-white-100 text-gray-800 text-2xs font-medium relative px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"
+                                  class="custom-bg-color flex justify-center hover:scale-110 mt-2 mx-4 duration-300  hover:text-white bg-gray-200 text-gray-800 text-2xs font-medium relative px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"
                                   >{{ tag.name }}</a
                                 >
                               </li>
@@ -246,23 +243,32 @@ border-radius: 50%;" id="button" class="bi bi-arrow-up "></i></button>
                   </div>
                 </div>
               </div>
-             <div class="border-l-2 border-gray-100 max-md:border-t-2 max-md:mt-8">
+              <div class="max-md:border-t-2 max-md:mt-8">
+                <h1 class="text-3xl flex justify-center">Posts you may like</h1>
+              </div>
+            
+             <div class=" max-md:border-t-2 max-md:mt-8">
                   <h1 class="text-3xl flex justify-center ">Posts</h1>
               <div
+                style="background-color: #EEEEEE;"
                 data-aos="fade-up"
-                class="w-full max-w-96 sm:w-46 bg-white shadow-xl p-6 text-center rounded-xl h-fit ml-12 max-md "
+                class="w-full  sm:w-46 shadow-xl p-8 text-center rounded-xl h-fit  "
               >
 
             <!-- card -->
             {% for post in posts %}
-            <div class="flex flex-row justify-center items-center mr-24 item-end mt-10">
-              <div
+          <div class="flex flex-row justify-center">
+            <div class="w-96 flex flex-row justify-center items-center mt-10">
+              <div 
+              
                 data-aos="fade-up"
-                class="bg-white shadow-xl pl-4 w-fit p-6 text-center rounded-xl h-fit"
+                class="bg-white w-96 shadow-xl  p-8 text-center rounded-xl h-fit flex flex-row justify-start"
               >
+              
+              <div>
                 <div
                 style="border-color: #102C57;"
-                  class="w-fit inline flex flex-row justify-center items-center rounded-xl hover:border-2 transition ease-in-out delay-150"
+                  class="w-fit flex flex-row justify-start items-center rounded-xl hover:border-2 transition ease-in-out delay-150"
                 >
                   <a href="{% url 'profile-page' username=post.author %}" class="li-class px-2 py-2 w-fit h-fit">
                     <img
@@ -271,11 +277,14 @@ border-radius: 50%;" id="button" class="bi bi-arrow-up "></i></button>
                       alt="Rounded avatar"
                     />
                   </a>
-                  <div class="w-fit inline pr-1">
-                    <a href="{% url 'profile-page' username=post.author.user.username %}" class="inline"> {{ post.author }} </a>
-                  </div>
+                 
+                    <a class="p-2" href="{% url 'profile-page' username=post.author.user.username %}"> {{ post.author }} </a>
+                  
                 </div>
-                <small class="inline text-right">{{ post.pub_date|timesince }} ago</small>
+                <div class="flex justify-end items-center">
+                   <small class="inline text-right">{{ post.pub_date|timesince }} ago</small>
+                </div>
+                
                 <div class="flex justify-start items-start">
                   <h1 class="font-medium text-xl pb-3 pt-0 lg:px-14 text-darken">
                       {{ post.title }}
@@ -287,9 +296,9 @@ border-radius: 50%;" id="button" class="bi bi-arrow-up "></i></button>
                       {{ post.content|safe|truncatechars:150 }}
                   </a>
                 </p>
-              <div class="items-start">
-              <i class="bi bi-chat"></i>
-                  {{ post.get_comment_count }}
+              <div class="flex items-center justify-start ">
+              <i class="bi bi-chat mr-1"></i>
+                  <p>{{ post.get_comment_count }}</p>
               </div>
                 <ul
                   class="flex justify-start flex-wrap items-start mt-2 border-t-2 border-black"
@@ -297,33 +306,30 @@ border-radius: 50%;" id="button" class="bi bi-arrow-up "></i></button>
                     {% for tag in post.tags.all %}
                   <li>
                     <a
-                            style="background-color: snow ;color: gray"
                       href="{% url 'search' %}?query={{ tag.name }}"
-                      class="tag-class flex justify-center hover:scale-110 mt-2 mx-4 duration-300  hover:text-white bg-white-100 text-gray-800 text-2xs font-medium relative px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"
+                      class="custom-bg-color flex justify-center hover:scale-110 mt-2 mx-4 duration-300 bg-gray-200  hover:text-white text-gray-800 text-2xs font-medium relative px-2.5 py-0.5 rounded"
                       >{{ tag.name }}</a
                     >
                   </li>
                 {% endfor %}
-                <li> </li>
-
+                
+                
                 </ul>
+                
+              </div>
+              <div class="ml-6 mt-8">
+                <img class="w-48 h-48 " src="../../static/images/testpic.jpg" alt="">
               </div>
             </div>
+            </div>
+          </div>
             {% endfor %}
               </div>
             </div>
+          </div>
           </section>
-          <section id="Tags">
-            <div class="mt-28 border-t-2 flex flex-row justify-start items-center flex-wrap">
-                {% for tag in tags %}
-                <a
-                  href="{% url 'search' %}?query={{ tag.name }}"
-
-                  class="shadow-md top-4 mx-4 px-4 flex justify-center hover:-translate-y-1 hover:scale-110 mt-2 duration-300 custom-bg-color hover:text-white bg-gray-100 text-gray-800 text-2xs font-medium relative px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300"
-                  >{{ tag.name }}</a>
-            {% endfor %}
-        </div>
-      </section>
+    <script src="../../static/js/Header.js">
+    </script>
     <script>
         $(window).on('load',function(){
         $('#status').fadeOut();
@@ -347,13 +353,12 @@ border-radius: 50%;" id="button" class="bi bi-arrow-up "></i></button>
 
     </script>
     <script>
-      const btn = document.querySelector("button.mobile-menu-button");
-      const menu = document.querySelector(".mobile-menu");
-
-      // add event listeners
-      btn.addEventListener("click", () => {
-        menu.classList.toggle("hidden");
+      $(document).ready(function() {
+        
+        $('#leftText').animate({left: '30%'}, 2000);
+        $('#rightText').animate({right: '20%'}, 2000);
       });
     </script>
+  
   </body>
 </html>
