@@ -87,3 +87,31 @@ background-color: #3C5B6F;
 color:snow ;
 border-radius: 50%;
 }
+.bg-div-color{
+    background-color: #E8DFCA;
+}
+.text {
+    position: absolute;
+    
+    transform: translateY(-50%);
+    color: snow;
+    font-size: 30px;
+    background-color: #0A1F3B;
+    padding: 11px;
+  }
+  
+  .left {
+    top: 60%;
+    left: -100%;
+  }
+  
+  .right {
+    top: 70%;
+    right: -100%;
+  } 
+
+  .button-post{
+    position: absolute;
+    top: 80%;
+    left: 50%;
+  }
