@@ -37,12 +37,14 @@
                 <div class="button">
                   <input type="submit">
                 </div>
+                  <div style="display: flex; justify-content: space-between">
                 <div>
-                  Not a member? <a href="{% url 'sing-up-page' %}">Signup now</a>
+                  Not a member? <a style="color: snow; margin-left: 2px;text-decoration: none" href="{% url 'sing-up-page' %}">Signup now</a>
                 </div>
                 <div>
-                    <a href="{% url 'timeline' %}">Home Page</a>
+                    <a style="text-decoration: none; color: snow;background-color: #0E2231 ; padding: 10px; border-radius: 25%" href="{% url 'timeline' %}">Home Page</a>
                 </div>
+                  </div>
               </form>
             </div>
         </div>
