@@ -2,14 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseBadRequest
-from django.db import transaction
 from . import models, forms
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
-from django.template.loader import render_to_string
 import sweetify
-
-
 # Create your views here.
 
 
@@ -77,6 +73,31 @@ def SignUp(request):
         'ProfileForm': profile_form,
         'sign_msg': sign_msg
     })
+
+
+def Login(request):
+    login_msg = None
+    loginform = forms.LoginForm(request.POST or None)
+
+    if request.method == 'POST':
+        if loginform.is_valid():
+            username = loginform.cleaned_data.get('username')
+            password = loginform.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('timeline')
+            else:
+                login_msg = 'Invalid credentials'
+        else:
+            login_msg = 'Error validating the form'
+
+    return render(request, 'Login.html', {'LoginForm': loginform, 'login_msg': login_msg})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login-page')
 
 
 def post_single(request, post_id):
@@ -163,9 +184,9 @@ def create_post(request):
             # If GET request, render an empty form
             post_form = forms.PostForm()
             return render(request, 'NewPost.html', {'post_form': post_form})
-
     else:
         # Handle unauthorized access for non-staff users
+        sweetify.error(request, 'Access Denied')
         return redirect('timeline')
 
 
@@ -174,67 +195,52 @@ def create_comment(request, post_id, parent_comment_id=None):
     # Get the post by ID
     post = get_object_or_404(models.Post, id=post_id)
 
-    if request.method == 'POST':
-        comment_form = forms.CommentForm(request.POST)  # Instantiate form with POST data
-        if comment_form.is_valid():
-            new_comment = comment_form.save(commit=False)
-            new_comment.author = request.user.profileuser  # Set the comment author
-            new_comment.root_post = post  # Set the root post
+    if not request.user.is_staff:
+        if request.method == 'POST':
+            comment_form = forms.CommentForm(request.POST)  # Instantiate form with POST data
+            if comment_form.is_valid():
+                new_comment = comment_form.save(commit=False)
+                new_comment.author = request.user.profileuser  # Set the comment author
+                new_comment.root_post = post  # Set the root post
 
-            # Set the parent comment if provided
-            if parent_comment_id:
-                parent_comment = get_object_or_404(models.Comment, id=parent_comment_id)
-                new_comment.parent_comment = parent_comment
+                # Set the parent comment if provided
+                if parent_comment_id:
+                    parent_comment = get_object_or_404(models.Comment, id=parent_comment_id)
+                    new_comment.parent_comment = parent_comment
 
-            new_comment.save()  # Save the new comment
-            return redirect('post-single', post_id=post_id)
+                new_comment.save()  # Save the new comment
+                return redirect('post-single', post_id=post_id)
 
-    # If not a POST request or form not valid, return an error response
-    return JsonResponse({'error': 'Invalid request or form data'}, status=400)
+        # If not a POST request or form not valid, return an error response
+        return JsonResponse({'error': 'Invalid request or form data'}, status=400)
+    else:
+        # Handle unauthorized access for non-staff users
+        sweetify.error(request, 'Access Denied')
+        return redirect('timeline')
 
 
 @login_required
 def create_reply(request, post_id, parent_comment_id):
     # Get the parent comment
     parent_comment = get_object_or_404(models.Comment, id=parent_comment_id)
-    if request.method == 'POST':
-        form = forms.CommentForm(request.POST)
-        if form.is_valid():
-            reply = form.save(commit=False)
-            reply.author = request.user.profileuser
-            reply.root_post = get_object_or_404(models.Post, id=post_id)
-            reply.arent_comment = parent_comment  # Set the parent comment
-            reply.save()
-            return redirect('post-single', post_id=post_id)
-    else:
-        # Redirect unauthenticated users to the login page
-        return redirect('login-page')
-    return HttpResponseBadRequest("Invalid request")
-
-
-def Login(request):
-    login_msg = None
-    loginform = forms.LoginForm(request.POST or None)
-
-    if request.method == 'POST':
-        if loginform.is_valid():
-            username = loginform.cleaned_data.get('username')
-            password = loginform.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('timeline')
-            else:
-                login_msg = 'Invalid credentials'
+    if not request.user.is_staff:
+        if request.method == 'POST':
+            form = forms.CommentForm(request.POST)
+            if form.is_valid():
+                reply = form.save(commit=False)
+                reply.author = request.user.profileuser
+                reply.root_post = get_object_or_404(models.Post, id=post_id)
+                reply.arent_comment = parent_comment  # Set the parent comment
+                reply.save()
+                return redirect('post-single', post_id=post_id)
         else:
-            login_msg = 'Error validating the form'
-
-    return render(request, 'Login.html', {'LoginForm': loginform, 'login_msg': login_msg})
-
-
-def logout_view(request):
-    logout(request)
-    return redirect('login-page')
+            # Redirect unauthenticated users to the login page
+            return redirect('login-page')
+        return HttpResponseBadRequest("Invalid request")
+    else:
+        # Handle unauthorized access for non-staff users
+        sweetify.error(request, 'Access Denied')
+        return redirect('timeline')
 
 
 def profile_view(request, username):
