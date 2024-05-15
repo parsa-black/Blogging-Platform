@@ -198,19 +198,23 @@
                 <div class="flex justify-between items-center mb-6">
                   <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion (20)</h2>
               </div>
-              <form id="comment-form" method="POST" action="{% url 'create-comment' post.id %}" class="mb-6">
-                  {% csrf_token %}
-                  <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                      <label for="comment" class="sr-only">Your comment</label>
-                      <textarea name="content" id="comment" rows="6"
-                          class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-                          placeholder="Write a comment..." required></textarea>
-                  </div>
+              {% if request.user.is_authenticated %}
+                  <form id="comment-form" method="POST" action="{% url 'create-comment' post.id %}" class="mb-6">
+                      {% csrf_token %}
+                      <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                          <label for="comment" class="sr-only">Your comment</label>
+                          <textarea name="content" id="comment" rows="6"
+                              class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                              placeholder="Write a comment..." required></textarea>
+                      </div>
 
-                  <button type="submit" class="flex justify-start ml-2 mt-2 custom-bg-color bg-transparent  text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                    Post Comment
-                  </button>
-              </form>
+                      <button type="submit" class="flex justify-start ml-2 mt-2 custom-bg-color bg-transparent  text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                        Post Comment
+                      </button>
+                  </form>
+              {% else %}
+                  <div></div>
+              {% endif %}
                   {% if comments %}
                     {% for comment in comments %}
                       <article class="mt-6 p-6 text-base bg-white rounded-lg dark:bg-gray-900">
@@ -253,15 +257,19 @@
                               </div>
                           </footer>
                           <p class="text-gray-500 dark:text-gray-400">{{ comment.content }}</p>
-                          <form method="POST" action="{% url 'create-reply' post_id=post.id parent_comment_id=comment.id %}">
-                                {% csrf_token %}
-                                <!-- Your reply form fields here -->
-                              <div style="text-align: left">
-                                <textarea name="content" rows="4" cols="50" style=
-                                        "resize: none; background-color: #ffffff;" placeholder="Enter your Replay here..."></textarea>
-                                <button type="submit">Reply</button>
-                              </div>
-                          </form>
+                          {% if request.user.is_authenticated %}
+                              <form method="POST" action="{% url 'create-reply' post_id=post.id parent_comment_id=comment.id %}">
+                                    {% csrf_token %}
+                                    <!-- Your reply form fields here -->
+                                  <div style="text-align: left">
+                                    <textarea name="content" rows="4" cols="50" style=
+                                            "resize: none; background-color: #ffffff;" placeholder="Enter your Replay here..."></textarea>
+                                    <button type="submit">Reply</button>
+                                  </div>
+                              </form>
+                          {% else %}
+                              <div></div>
+                          {% endif %}
                           {% for reply in comment.replies.all %}
                                 <footer class="flex justify-between items-center mb-2">
                                       <a href="{% url 'profile-page' username=reply.author %}">
