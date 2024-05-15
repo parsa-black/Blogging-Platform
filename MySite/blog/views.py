@@ -42,6 +42,43 @@ def TimeLine(request):
                                              'user_likes_posts': user_likes_posts})
 
 
+def SignUp(request):
+    sign_msg = None
+    user_form = forms.UserForm(request.POST)
+    profile_form = forms.ProfileForm(request.POST, request.FILES)
+
+    if request.method == 'POST':
+        if user_form.is_valid():
+            if user_form.cleaned_data.get('password') == user_form.cleaned_data.get('confirm_password'):
+                user = user_form.save(commit=False)
+                hashed_password = make_password(user_form.cleaned_data['password'])
+                # Create a user object but don't save
+                user.password = hashed_password
+                user.save()
+                profile = profile_form.save(commit=False)
+                profile.user = user  # Associate the profile with the user
+                profile.save()
+
+                # Authenticate the user
+                user = authenticate(username=user_form.cleaned_data['username'],
+                                    password=user_form.cleaned_data['password'])
+                if user is not None:
+                    # Login the user
+                    login(request, user)
+
+                return redirect('timeline')
+            else:
+                sign_msg = 'Password should be equal to password confirm'
+    else:
+        user_form = forms.UserForm()
+        profile_form = forms.ProfileForm()
+    return render(request, 'SingUp.html', {
+        'UserForm': user_form,
+        'ProfileForm': profile_form,
+        'sign_msg': sign_msg
+    })
+
+
 def post_single(request, post_id):
     # Get the post by ID or raise a 404 if not found
     post = get_object_or_404(models.Post, id=post_id)
@@ -173,35 +210,6 @@ def create_reply(request, post_id, parent_comment_id):
         # Redirect unauthenticated users to the login page
         return redirect('login-page')
     return HttpResponseBadRequest("Invalid request")
-
-
-def SignUp(request):
-    sign_msg = None
-    user_form = forms.UserForm(request.POST)
-    profile_form = forms.ProfileForm(request.POST, request.FILES)
-
-    if request.method == 'POST':
-        if user_form.is_valid():
-            if user_form.cleaned_data.get('password') == user_form.cleaned_data.get('confirm_password'):
-                user = user_form.save(commit=False)
-                hashed_password = make_password(user_form.cleaned_data['password'])
-                # Create a user object but don't save
-                user.password = hashed_password
-                user.save()
-                profile = profile_form.save(commit=False)
-                profile.user = user  # Associate the profile with the user
-                profile.save()
-                return redirect('timeline')
-            else:
-                sign_msg = 'Password should be equal to password confirm'
-    else:
-        user_form = forms.UserForm()
-        profile_form = forms.ProfileForm()
-    return render(request, 'SingUp.html', {
-        'UserForm': user_form,
-        'ProfileForm': profile_form,
-        'sign_msg': sign_msg
-    })
 
 
 def Login(request):
