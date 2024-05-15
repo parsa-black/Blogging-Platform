@@ -144,7 +144,6 @@
       <section>
         <div data-aos="flip-up" class="max-w-xl mx-auto text-center mt-24">
           <h1 class="text-3xl">Posts</h1>
-          <img src="../../static/images/testpic.jpg" alt="">
         </div>
         <!-- card -->
         <div class="grid md:grid-cols-1 w-full my-6 h-fit gap-14 md:gap-5 mt-10">
@@ -178,6 +177,7 @@
             <p class="px-4 text-gray-500">
               {{ post.content|safe }}
             </p>
+            <div class="flex justify-center"><img src="../../media/{{ post.image }}" alt="" style="padding: 10px"></div>
             <ul
               class="flex justify-start flex-wrap items-start mt-2 border-t-2 border-black"
             >

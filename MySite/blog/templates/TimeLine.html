@@ -319,9 +319,15 @@
                 </ul>
 
               </div>
-              <div class="ml-6 mt-8">
-                <img class="w-48 h-48 " src="../../static/images/testpic.jpg" alt="">
-              </div>
+              {% if post.image %}
+                <div class="ml-6 mt-8">
+                    <img class="w-48 h-48 " src="../../media/{{ post.image }}" alt="photo">
+                </div>
+              {% else %}
+                  <div class="ml-6 mt-8">
+                    <img class="w-48 h-48 " src="../../media/blog/media/images/default.png" alt="photo">
+                  </div>
+              {% endif %}
             </div>
             </div>
           </div>
