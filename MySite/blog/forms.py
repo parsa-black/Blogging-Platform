@@ -32,7 +32,7 @@ class UserForm(forms.ModelForm):
     password = forms.CharField(
         label='Password',
         max_length=30,
-        widget=forms.TextInput(attrs={'placeholder': 'Password'}),
+        widget=forms.PasswordInput(attrs={'placeholder': 'Password'}),
         error_messages={'required': 'Please Fill The Filed',
                         'max_length': 'Maximum Length is 30'}
     )
@@ -48,7 +48,7 @@ class UserForm(forms.ModelForm):
     confirm_password = password = forms.CharField(
         label='Confirm Password',
         max_length=30,
-        widget=forms.TextInput(attrs={'placeholder': 'Confirm Password'}),
+        widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}),
         error_messages={'required': 'Please Enter Your Password',
                         'max_length': 'Password Max Length Must Be 30 Characters'}
     )
