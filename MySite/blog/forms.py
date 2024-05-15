@@ -129,7 +129,7 @@ class PostForm(forms.ModelForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'title bg-gray-100 border border-gray-300',
-                'placeholder': 'Enter tags separated by commas.',
+                'placeholder': 'Enter tags separated by #.',
             }
         )
     )
@@ -149,7 +149,7 @@ class PostForm(forms.ModelForm):
     def clean_tags(self):
         tags_input = self.cleaned_data.get('tags')
         if tags_input:
-            tag_names = [name.strip() for name in tags_input.split(',') if name.strip()]
+            tag_names = [name.strip() for name in tags_input.split('#') if name.strip()]
             return tag_names
         return []
 
