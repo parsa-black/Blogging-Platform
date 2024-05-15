@@ -14,6 +14,15 @@ import sweetify
 
 
 def TimeLine(request):
+    user_tags = []
+    if request.user.is_authenticated:
+        user_tags = models.Tag.objects.filter(post__author__user=request.user).distinct()
+
+    if user_tags:
+        user_likes_posts = models.Post.objects.filter(tags__in=user_tags).distinct()
+    else:
+        user_likes_posts = models.Post.objects.all()
+
     posts = models.Post.objects.order_by('-pub_date').select_related('author').all
     top_posts = (
         models.Post.objects
@@ -29,7 +38,8 @@ def TimeLine(request):
         profile = get_object_or_404(models.ProfileUser, user_id=request.user.id)
     tags = models.Tag.objects.all()
     return render(request, 'TimeLine.html', {'posts': posts, 'tags': tags,
-                                             'profile': profile, 'top_posts': top_posts})
+                                             'profile': profile, 'top_posts': top_posts,
+                                             'user_likes_posts': user_likes_posts})
 
 
 def post_single(request, post_id):

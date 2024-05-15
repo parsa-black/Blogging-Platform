@@ -245,10 +245,96 @@
                   </div>
                 </div>
               </div>
+                <!-- User like post -->
               <div class="max-md:border-t-2 max-md:mt-8">
                 <h1 class="text-3xl flex justify-center">Posts you may like</h1>
+                  <div
+                style="background-color: #EEEEEE;"
+                data-aos="fade-up"
+                class="w-full  sm:w-46 shadow-xl p-8 text-center rounded-xl h-fit  "
+              >
+
+            <!-- card -->
+            {% for post in user_likes_posts %}
+          <div class="flex flex-row justify-center">
+            <div class="w-96 flex flex-row justify-center items-center mt-10">
+              <div
+
+                data-aos="fade-up"
+                class="bg-white w-96 shadow-xl  p-8 text-center rounded-xl h-fit flex flex-row justify-start"
+              >
+
+              <div>
+                <div
+                style="border-color: #102C57;"
+                  class="w-fit flex flex-row justify-start items-center rounded-xl hover:border-2 transition ease-in-out delay-150"
+                >
+                  <a href="{% url 'profile-page' username=post.author %}" class="li-class px-2 py-2 w-fit h-fit">
+                    <img
+                      class="w-10 h-10 rounded-full"
+                      src="../../media/{{ post.author.image }}"
+                      alt="Rounded avatar"
+                    />
+                  </a>
+
+                    <a class="p-2" href="{% url 'profile-page' username=post.author.user.username %}"> {{ post.author }} </a>
+
+                </div>
+                <div class="flex justify-end items-center">
+                   <small class="inline text-right">{{ post.pub_date|timesince }} ago</small>
+                </div>
+
+                <div class="flex justify-start items-start">
+                  <h1 class="font-medium text-xl pb-3 pt-0 lg:px-14 text-darken">
+                      {{ post.title }}
+                  </h1>
+                </div>
+
+                <p class="px-4 text-gray-500">
+                  <a href="{% url 'post-single' post_id=post.id %}">
+                      {{ post.content|safe|truncatechars:150 }}
+                  </a>
+                </p>
+              <div class="flex items-center justify-start ">
+              <i class="bi bi-chat mr-1"></i>
+                  <p>{{ post.get_comment_count }}</p>
               </div>
-            
+                <ul
+                  class="flex justify-start flex-wrap items-start mt-2 border-t-2 border-black"
+                >
+                    {% for tag in post.tags.all %}
+                  <li>
+                    <a
+                      href="{% url 'search' %}?query={{ tag.name }}"
+                      class="custom-bg-color flex justify-center hover:scale-110 mt-2 mx-4 duration-300 bg-gray-200  hover:text-white text-gray-800 text-2xs font-medium relative px-2.5 py-0.5 rounded"
+                      >{{ tag.name }}</a
+                    >
+                  </li>
+                {% endfor %}
+
+
+                </ul>
+
+              </div>
+              {% if post.image %}
+                <div class="ml-6 mt-8">
+                    <img class="w-48 h-48 " src="../../media/{{ post.image }}" alt="photo">
+                </div>
+              {% else %}
+                  <div class="ml-6 mt-8">
+                    <img class="w-48 h-48 " src="../../media/blog/media/images/default.png" alt="photo">
+                  </div>
+              {% endif %}
+            </div>
+            </div>
+          </div>
+            {% endfor %}
+              </div>
+              </div>
+            <!-- END User like post -->
+
+
+            <!-- All Post -->
              <div class=" max-md:border-t-2 max-md:mt-8">
                   <h1 class="text-3xl flex justify-center ">Posts</h1>
               <div
@@ -334,6 +420,7 @@
             {% endfor %}
               </div>
             </div>
+        <!-- End All Post -->
           </div>
           </section>
     <script src="../../static/js/Header.js">
