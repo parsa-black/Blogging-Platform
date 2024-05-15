@@ -1,8 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.conf import settings
 from ckeditor.fields import RichTextField
-# from django.core.validators import MaxValueValidator
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 
 
@@ -19,8 +17,8 @@ class ProfileUser(models.Model):
     phone_number = models.CharField(max_length=10, unique=True,
                                     validators=[
                                         MinLengthValidator(limit_value=10),
-                                        MaxLengthValidator(limit_value=10),
-                                    ])  # 0(912 345 6789)
+                                        MaxLengthValidator(limit_value=10)
+                                    ])  # 0(9123456789)
     image = models.ImageField(upload_to='blog/media/images', null=True, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -74,7 +72,10 @@ class Comment(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
     root_post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True, blank=True, related_name='post')
     author = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
-    arent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='replies')
+    arent_comment = models.ForeignKey('self',
+                                      on_delete=models.CASCADE,
+                                      null=True, blank=True,
+                                      related_name='replies')
 
     def __str__(self):
         return self.content
